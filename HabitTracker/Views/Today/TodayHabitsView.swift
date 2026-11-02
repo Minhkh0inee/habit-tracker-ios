@@ -215,11 +215,8 @@ public struct TodayHabitsView: View {
             .sheet(isPresented: $showingAddHabit) {
                 AddHabitSheet()
             }
-            .sheet(isPresented: $showingInterviewRecall) {
+            .fullScreenCover(isPresented: $showingInterviewRecall) {
                 InterviewRecallView()
-                    .presentationDetents([.large])
-                    .presentationDragIndicator(.visible)
-                    .interactiveDismissDisabled()
             }
             .sheet(item: $habitForDirectLog) { habit in
                 SessionCompletionSheet(
@@ -228,7 +225,7 @@ public struct TodayHabitsView: View {
                     onSaved: {}
                 )
             }
-            .sheet(item: $habitForCurriculum) { habit in
+            .fullScreenCover(item: $habitForCurriculum) { habit in
                 HabitCurriculumSheet(
                     habit: habit,
                     onStartTimerWithConcept: { targetHabit, concept in
@@ -237,9 +234,6 @@ public struct TodayHabitsView: View {
                         selectedTab = 1
                     }
                 )
-                .presentationDetents([.large])
-                .presentationDragIndicator(.visible)
-                .interactiveDismissDisabled()
             }
             .sheet(item: $habitForEdit) { habit in
                 EditHabitSheet(habit: habit)
