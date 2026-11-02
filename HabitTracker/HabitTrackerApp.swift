@@ -113,6 +113,19 @@ struct HabitTrackerApp: App {
             
             var didAddAny = false
             for habit in allHabits {
+                let isPythonHabit = habit.title.lowercased().contains("python")
+                let hasWrongDECurriculum = isPythonHabit && habit.curriculumQueue.contains(where: {
+                    $0.title.contains("Data Warehouses") || $0.title.contains("Lakehouses") || $0.title.contains("Star vs Snowflake")
+                })
+                
+                // Auto-correct: If Python habit received Data Engineering concepts due to substring match, replace with Python language concepts
+                if hasWrongDECurriculum {
+                    for oldConcept in habit.curriculumQueue {
+                        context.delete(oldConcept)
+                    }
+                    habit.curriculumQueue.removeAll()
+                }
+                
                 if habit.curriculumQueue.isEmpty {
                     let seedList = CurriculumSeedData.defaultConcepts(for: habit.title)
                     for (index, seed) in seedList.enumerated() {

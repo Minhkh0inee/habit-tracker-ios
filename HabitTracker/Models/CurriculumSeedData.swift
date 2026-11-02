@@ -16,16 +16,17 @@ public enum CurriculumSeedData {
     public static func defaultConcepts(for habitTitle: String) -> [SeedConcept] {
         let lower = habitTitle.lowercased()
         
-        if lower.contains("swift") || lower.contains("ios") {
+        // Match Python programming language specifically first
+        if lower.contains("python") {
+            return pythonConcepts
+        } else if lower.contains("swift") || lower.contains("ios") {
             return swiftConcepts
         } else if lower.contains("algorithm") || lower.contains("dsa") {
             return dsaConcepts
         } else if lower.contains("system design") || lower.contains("architecture") {
             return systemDesignConcepts
-        } else if lower.contains("data engineering") || lower.contains("de") {
+        } else if lower.contains("data engineering") || lower.contains("data engineer") {
             return dataEngineeringConcepts
-        } else if lower.contains("python") {
-            return pythonConcepts
         } else {
             return genericEngineeringConcepts
         }
@@ -282,56 +283,81 @@ public enum CurriculumSeedData {
         )
     ]
     
-    // MARK: - Python for DE Curriculum
+    // MARK: - Python Programming Language Curriculum
     public static let pythonConcepts: [SeedConcept] = [
         SeedConcept(
-            title: "Memory Management, GIL & Reference Counting in CPython",
-            description: "How CPython allocates objects, cyclical garbage collector, and understanding the Global Interpreter Lock.",
-            estimatedMinutes: 30
-        ),
-        SeedConcept(
-            title: "Generators, Iterators & 'yield' for Streaming Large Files",
-            description: "Processing gigabyte-scale CSVs and log files with zero RAM bloat using streaming generator expressions.",
+            title: "Python Data Model & Dunder Methods (__repr__, __getitem__, __len__)",
+            description: "Understanding Python's object protocols, rich comparisons, sequence emulation, and building idiomatic custom container classes.",
             estimatedMinutes: 25
         ),
         SeedConcept(
-            title: "Decorators & Context Managers (@contextmanager)",
-            description: "Writing custom retry decorators with exponential backoff, resource pooling, and clean database session teardown.",
+            title: "Memory Management & CPython Garbage Collection Internals",
+            description: "Reference counting mechanics, circular reference resolution with generation 0/1/2 cyclical garbage collector, and weakref module.",
             estimatedMinutes: 30
         ),
         SeedConcept(
-            title: "Multiprocessing vs Threading vs Asyncio for Data Pipelines",
-            description: "Choosing between ProcessPoolExecutor for CPU-bound transforms and Asyncio/ThreadPool for network I/O calls.",
+            title: "Variable Binding, Mutability & Parameter Passing Gotchas",
+            description: "Understanding 'pass-by-object-reference', mutable default arguments trap, shallow vs deep copy mechanics with copy.deepcopy.",
+            estimatedMinutes: 25
+        ),
+        SeedConcept(
+            title: "Scopes, LEGB Rule & Closures (__closure__)",
+            description: "Local, Enclosing, Global, and Built-in resolution rules, the 'nonlocal' and 'global' keywords, and inspecting closure cells.",
+            estimatedMinutes: 25
+        ),
+        SeedConcept(
+            title: "Function & Class Decorators (@functools.wraps)",
+            description: "Higher-order functions, writing parameterized decorators, class-based decorators, preserving signature/docstrings with wraps.",
+            estimatedMinutes: 30
+        ),
+        SeedConcept(
+            title: "Iterables, Iterators Protocol & Custom Iterators",
+            description: "Implementing __iter__ and __next__, handling StopIteration, and how Python for-loops work under the hood.",
+            estimatedMinutes: 25
+        ),
+        SeedConcept(
+            title: "Generators, Generator Expressions & 'yield from'",
+            description: "Writing stateful generators, memory-efficient streaming, coroutine delegation with 'yield from', and generator pipelines.",
+            estimatedMinutes: 30
+        ),
+        SeedConcept(
+            title: "Context Managers Protocol (__enter__, __exit__ & contextlib)",
+            description: "Resource lifecycle management, swallowing vs propagating exceptions in __exit__, and @contextmanager generators.",
+            estimatedMinutes: 25
+        ),
+        SeedConcept(
+            title: "OOP, Multiple Inheritance & C3 Linearization (MRO)",
+            description: "Understanding Method Resolution Order, the C3 algorithm, cooperative multiple inheritance with super(), and Mixins.",
             estimatedMinutes: 35
         ),
         SeedConcept(
-            title: "Pandas Performance: Vectorization vs Itertuples vs Polars",
-            description: "Why iterrows is slow, vectorized numpy operations, memory downcasting, and Polars lazy evaluation comparison.",
+            title: "Abstract Base Classes (abc.ABC) & Structural Typing (typing.Protocol)",
+            description: "Enforcing interface contracts via @abstractmethod vs duck typing with @runtime_checkable Protocols.",
             estimatedMinutes: 30
         ),
         SeedConcept(
-            title: "Data Validation & Typing: Pydantic v2 & Type Hints",
-            description: "Strict schema parsing, field validators, Rust-backed Pydantic v2 performance, and runtime model serialization.",
-            estimatedMinutes: 25
+            title: "Metaclasses, 'type' Constructor & __init_subclass__",
+            description: "Class creation hooks, intercepting class definitions with custom metaclasses, and modern subclass validation via __init_subclass__.",
+            estimatedMinutes: 35
         ),
         SeedConcept(
-            title: "SQLAlchemy 2.0: Engine Connection Pooling & Sessions",
-            description: "Bulk insert performance, managing connection lifecycles, statement execution, and transactional rollbacks.",
+            title: "CPython Concurrency: GIL, Threading vs Multiprocessing",
+            description: "Global Interpreter Lock bottlenecks, CPU-bound vs I/O-bound performance, thread safety, and inter-process queues.",
+            estimatedMinutes: 35
+        ),
+        SeedConcept(
+            title: "Modern Asyncio: Coroutines, Tasks, Event Loop & async/await",
+            description: "Non-blocking cooperative multitasking, task creation, handling cancellation, timeouts, and asyncio.gather vs TaskGroup.",
+            estimatedMinutes: 35
+        ),
+        SeedConcept(
+            title: "Advanced Type Hints, Generics (TypeVar) & ParamSpec",
+            description: "Writing type-safe Python libraries, generic classes, covariance vs contravariance, and validating with mypy.",
             estimatedMinutes: 30
         ),
         SeedConcept(
-            title: "PyArrow & In-Memory Zero-Copy Columnar Interop",
-            description: "Arrow tables, zero-copy conversion between Python and Parquet/Polars, and schema casting.",
-            estimatedMinutes: 30
-        ),
-        SeedConcept(
-            title: "Robust Data Pipeline CLI Tools with Typer / Click",
-            description: "Building production command-line utilities with auto-generated help, environment flag overrides, and exit codes.",
-            estimatedMinutes: 25
-        ),
-        SeedConcept(
-            title: "Unit Testing Data Pipelines with Pytest & Docker Fixtures",
-            description: "Mocking external APIs, spin up local Postgres/MinIO containers using pytest fixtures, and snapshot testing.",
+            title: "Performance Optimization: __slots__, cProfile & Bytecode (dis)",
+            description: "Eliminating instance __dict__ overhead with __slots__, analyzing bytecode instructions with dis, and profiling hot loops.",
             estimatedMinutes: 30
         )
     ]
