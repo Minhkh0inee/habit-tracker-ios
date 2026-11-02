@@ -45,52 +45,56 @@ public struct HabitCurriculumSheet: View {
     }
     
     public var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    // Header Overview Card
-                    curriculumProgressCard
-                        .padding(.horizontal)
-                        .padding(.top, 8)
-                    
-                    // Action Buttons: Add Custom or AI Generate
-                    actionsBar
-                        .padding(.horizontal)
-                    
-                    // SECTION 1: Today's Scheduled Concepts
-                    todayScheduledSection
-                        .padding(.horizontal)
-                    
-                    // SECTION 2: Upcoming Roadmap Backlog
-                    upcomingBacklogSection
-                        .padding(.horizontal)
-                    
-                    // SECTION 3: Completed / Mastered Concepts
-                    if !habit.completedCurriculum.isEmpty {
-                        completedConceptsSection
+        ZStack {
+            AppTheme.background.ignoresSafeArea()
+            
+            NavigationStack {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        // Header Overview Card
+                        curriculumProgressCard
                             .padding(.horizontal)
+                            .padding(.top, 8)
+                        
+                        // Action Buttons: Add Custom or AI Generate
+                        actionsBar
+                            .padding(.horizontal)
+                        
+                        // SECTION 1: Today's Scheduled Concepts
+                        todayScheduledSection
+                            .padding(.horizontal)
+                        
+                        // SECTION 2: Upcoming Roadmap Backlog
+                        upcomingBacklogSection
+                            .padding(.horizontal)
+                        
+                        // SECTION 3: Completed / Mastered Concepts
+                        if !habit.completedCurriculum.isEmpty {
+                            completedConceptsSection
+                                .padding(.horizontal)
+                        }
+                    }
+                    .padding(.bottom, 32)
+                }
+                .scrollBounceBehavior(.basedOnSize)
+                .background(AppTheme.background.ignoresSafeArea())
+                .navigationTitle("\(habit.title) Syllabus")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") {
+                            dismiss()
+                        }
+                        .font(.system(.body, design: .rounded, weight: .bold))
+                        .foregroundColor(AppTheme.textPrimary)
                     }
                 }
-                .padding(.bottom, 32)
-            }
-            .background(AppTheme.background.ignoresSafeArea())
-            .navigationTitle("\(habit.title) Syllabus")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        dismiss()
-                    }
-                    .font(.system(.body, design: .rounded, weight: .bold))
-                    .foregroundColor(AppTheme.textPrimary)
+                .sheet(isPresented: $showingAddConceptSheet) {
+                    addCustomConceptSheet
                 }
-            }
-            .interactiveDismissDisabled()
-            .sheet(isPresented: $showingAddConceptSheet) {
-                addCustomConceptSheet
-            }
-            .sheet(isPresented: $showingAIGeneratorSheet) {
-                aiGeneratorSheet
+                .sheet(isPresented: $showingAIGeneratorSheet) {
+                    aiGeneratorSheet
+                }
             }
         }
     }
