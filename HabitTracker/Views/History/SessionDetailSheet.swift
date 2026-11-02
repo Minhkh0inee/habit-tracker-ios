@@ -94,13 +94,7 @@ public struct SessionDetailSheet: View {
                                             
                                             Spacer()
                                             
-                                            Text("Stage \(item.reviewStage)")
-                                                .font(.system(size: 10, weight: .bold, design: .rounded))
-                                                .foregroundColor(AppTheme.textSecondary)
-                                                .padding(.horizontal, 6)
-                                                .padding(.vertical, 2)
-                                                .background(AppTheme.background)
-                                                .clipShape(Capsule())
+                                            ReviewStageBadge(stage: item.reviewStage)
                                         }
                                         
                                         if !item.notes.isEmpty {
@@ -146,13 +140,7 @@ public struct SessionDetailSheet: View {
                                     
                                     Spacer()
                                     
-                                    Label("Stage \(session.reviewStage)", systemImage: "clock.arrow.circlepath")
-                                        .font(.system(size: 10, weight: .semibold, design: .rounded))
-                                        .foregroundColor(AppTheme.textSecondary)
-                                        .padding(.horizontal, 8)
-                                        .padding(.vertical, 3)
-                                        .background(AppTheme.surface)
-                                        .clipShape(Capsule())
+                                    ReviewStageBadge(stage: session.reviewStage)
                                 }
                                 
                                 if !session.lessonTitle.isEmpty {
@@ -215,14 +203,10 @@ public struct SessionDetailSheet: View {
     }
     
     private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter.string(from: date)
+        AppFormatters.longDate(date)
     }
     
     private func formattedTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+        AppFormatters.time(date)
     }
 }

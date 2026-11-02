@@ -38,6 +38,8 @@
 		CFAE26C02CBD5F44A1AA3194 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753DA1718A0E50B0BAC1E90C /* TimerView.swift */; };
 		7762D7134E265B06A0F7E56D /* TimerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53740826CD435EC782C0DCEF /* TimerViewModel.swift */; };
 		65053DB537C15C809E03E62F /* TodayHabitsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */; };
+		05D4F2A54FFE435D9B068730 /* SpacedRepetitionScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */; };
+		FC9078104C4541E68E1499C6 /* UIComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C89CA115D4D4BB50C7755 /* UIComponents.swift */; };
 		1968B2D99B145A6988CD614E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -73,6 +75,8 @@
 		753DA1718A0E50B0BAC1E90C /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Timer/TimerView.swift"; sourceTree = "<group>"; };
 		53740826CD435EC782C0DCEF /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModels/TimerViewModel.swift"; sourceTree = "<group>"; };
 		2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/TodayHabitsView.swift"; sourceTree = "<group>"; };
+		9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/SpacedRepetitionScheduler.swift"; sourceTree = "<group>"; };
+		390C89CA115D4D4BB50C7755 /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/UIComponents.swift"; sourceTree = "<group>"; };
 		887EA8CF02AC577DBC72B720 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Resources/Info.plist"; sourceTree = "<group>"; };
 		62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Resources/Assets.xcassets"; sourceTree = "<group>"; };
 		BFCD8D68FD9C5FE788962C45 /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,6 +135,8 @@
 				753DA1718A0E50B0BAC1E90C /* TimerView.swift */,
 				53740826CD435EC782C0DCEF /* TimerViewModel.swift */,
 				2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */,
+				9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */,
+				390C89CA115D4D4BB50C7755 /* UIComponents.swift */,
 				887EA8CF02AC577DBC72B720 /* Info.plist */,
 				62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */,
 			);
@@ -244,6 +250,8 @@
 				CFAE26C02CBD5F44A1AA3194 /* TimerView.swift in Sources */,
 				7762D7134E265B06A0F7E56D /* TimerViewModel.swift in Sources */,
 				65053DB537C15C809E03E62F /* TodayHabitsView.swift in Sources */,
+				05D4F2A54FFE435D9B068730 /* SpacedRepetitionScheduler.swift in Sources */,
+				FC9078104C4541E68E1499C6 /* UIComponents.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

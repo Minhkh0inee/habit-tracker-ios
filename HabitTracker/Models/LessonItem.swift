@@ -48,21 +48,10 @@ public final class LessonItem {
     public func advanceReviewStage() {
         reviewCount += 1
         reviewStage = min(reviewStage + 1, 5)
-        
         if reviewStage >= 5 {
             isMastered = true
         }
-        
-        let daysToAdd: Int
-        switch reviewStage {
-        case 1: daysToAdd = 3   // Stage 1 -> Review in 3 days
-        case 2: daysToAdd = 7   // Stage 2 -> Review in 1 week
-        case 3: daysToAdd = 14  // Stage 3 -> Review in 2 weeks
-        case 4: daysToAdd = 30  // Stage 4 -> Review in 1 month
-        default: daysToAdd = 60 // Stage 5 -> Mastered
-        }
-        
-        nextReviewDate = Calendar.current.date(byAdding: .day, value: daysToAdd, to: Date()) ?? Date().addingTimeInterval(Double(daysToAdd * 86400))
+        nextReviewDate = SpacedRepetitionScheduler.calculateNextReviewDate(from: reviewStage)
     }
     
     public func resetReviewStage() {
@@ -70,6 +59,6 @@ public final class LessonItem {
         reviewStage = 1
         isMastered = false
         // Reset to review tomorrow
-        nextReviewDate = Calendar.current.date(byAdding: .day, value: 1, to: Date()) ?? Date().addingTimeInterval(86400)
+        nextReviewDate = SpacedRepetitionScheduler.calculateNextReviewDate(from: 0)
     }
 }

@@ -121,19 +121,7 @@ public struct HabitCurriculumSheet: View {
             }
             
             // Progress Bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(AppTheme.surface)
-                        .frame(height: 8)
-                    
-                    Capsule()
-                        .fill(AppTheme.textPrimary)
-                        .frame(width: max(0, geo.size.width * CGFloat(progressRatio)), height: 8)
-                        .animation(.easeInOut(duration: 0.3), value: progressRatio)
-                }
-            }
-            .frame(height: 8)
+            MinimalProgressBar(progress: progressRatio, height: 8)
         }
         .padding(16)
         .bentoCard()
@@ -265,7 +253,7 @@ public struct HabitCurriculumSheet: View {
                             .strikethrough()
                         
                         if let date = concept.completedDate {
-                            Text("Completed on \(formattedDate(date))")
+                            Text("Completed on \(AppFormatters.mediumDate(date))")
                                 .font(.system(size: 10, design: .rounded))
                                 .foregroundColor(AppTheme.textTertiary)
                         }
@@ -574,11 +562,5 @@ public struct HabitCurriculumSheet: View {
                 }
             }
         }
-    }
-    
-    private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy"
-        return formatter.string(from: date)
     }
 }

@@ -41,9 +41,6 @@ public struct HabitProgressView: View {
         let today = calendar.startOfDay(for: Date())
         var points: [DailyChartData] = []
         
-        let dayFormatter = DateFormatter()
-        dayFormatter.dateFormat = "E"
-        
         for i in (0..<timeRangeDays).reversed() {
             guard let targetDate = calendar.date(byAdding: .day, value: -i, to: today) else { continue }
             
@@ -51,7 +48,7 @@ public struct HabitProgressView: View {
                 calendar.isDate(session.date, inSameDayAs: targetDate)
             }.reduce(0) { $0 + $1.durationMinutes }
             
-            let label = calendar.isDateInToday(targetDate) ? "Today" : dayFormatter.string(from: targetDate)
+            let label = calendar.isDateInToday(targetDate) ? "Today" : AppFormatters.dayAbbreviation(targetDate)
             
             points.append(DailyChartData(
                 id: "\(i)_\(label)",
@@ -341,18 +338,7 @@ public struct HabitProgressView: View {
                                 .foregroundColor(AppTheme.textPrimary)
                         }
                         
-                        GeometryReader { geo in
-                            ZStack(alignment: .leading) {
-                                Capsule()
-                                    .fill(AppTheme.surface)
-                                    .frame(height: 6)
-                                
-                                Capsule()
-                                    .fill(AppTheme.textPrimary)
-                                    .frame(width: max(0, geo.size.width * CGFloat(progressPercent)), height: 6)
-                            }
-                        }
-                        .frame(height: 6)
+                        MinimalProgressBar(progress: progressPercent, height: 6)
                     }
                 }
                 .padding(14)
@@ -427,8 +413,6 @@ public struct HabitProgressView: View {
     }
     
     private func formattedDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, h:mm a"
-        return formatter.string(from: date)
+        "\(AppFormatters.mediumDate(date)), \(AppFormatters.time(date))"
     }
 }

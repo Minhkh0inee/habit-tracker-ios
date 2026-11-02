@@ -194,9 +194,7 @@ public struct HabitCalendarView: View {
     
     // MARK: - Helpers
     private func monthYearString(from date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMMM yyyy"
-        return formatter.string(from: date)
+        AppFormatters.monthYear(date)
     }
     
     private func previousMonth() {

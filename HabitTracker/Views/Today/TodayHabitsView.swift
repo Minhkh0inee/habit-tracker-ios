@@ -269,19 +269,7 @@ public struct TodayHabitsView: View {
             }
             
             // Minimalist Progress Bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule()
-                        .fill(AppTheme.surface)
-                        .frame(height: 8)
-                    
-                    Capsule()
-                        .fill(AppTheme.textPrimary)
-                        .frame(width: max(0, geo.size.width * CGFloat(progressRatio)), height: 8)
-                        .animation(.easeInOut(duration: 0.3), value: progressRatio)
-                }
-            }
-            .frame(height: 8)
+            MinimalProgressBar(progress: progressRatio, height: 8)
         }
         .padding(18)
         .bentoCard()
@@ -289,30 +277,16 @@ public struct TodayHabitsView: View {
     
     // MARK: - Empty State
     private var emptyStateView: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "checklist")
-                .font(.system(size: 40, weight: .light))
-                .foregroundColor(AppTheme.textSecondary)
-            
-            Text("No Habits Yet")
-                .font(.system(.headline, design: .rounded))
-                .foregroundColor(AppTheme.textPrimary)
-            
-            Text("Tap the '+' button above to add your first technical habit.")
-                .font(.system(.footnote, design: .rounded))
-                .foregroundColor(AppTheme.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(32)
-        .bentoCard()
+        EmptyStateView(
+            iconName: "checklist",
+            title: "No Habits Yet",
+            message: "Tap the '+' button above to add your first technical habit."
+        )
     }
     
     // MARK: - Helpers
     private var todayFormattedDate: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE, MMM d"
-        return formatter.string(from: Date())
+        AppFormatters.dayAndMonth()
     }
     
     private func deleteHabit(_ habit: Habit) {

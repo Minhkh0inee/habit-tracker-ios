@@ -49,7 +49,7 @@ public struct InterviewRecallView: View {
                                 .font(.system(.caption, design: .rounded, weight: .bold))
                                 .foregroundColor(AppTheme.textSecondary)
                             Spacer()
-                            stageBadge(currentItem.reviewStage)
+                            ReviewStageBadge(stage: currentItem.reviewStage)
                         }
                         .padding(.horizontal)
                         
@@ -221,39 +221,13 @@ public struct InterviewRecallView: View {
         }
     }
     
-    // MARK: - Stage Badge
-    private func stageBadge(_ stage: Int) -> some View {
-        let label = stage >= 5 ? "Stage 5 (Mastered)" : "Stage \(stage)/5"
-        return Text(label)
-            .font(.system(size: 10, weight: .bold, design: .monospaced))
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(AppTheme.surface)
-            .foregroundColor(stage >= 5 ? .green : AppTheme.textPrimary)
-            .clipShape(Capsule())
-            .overlay(
-                Capsule().stroke(AppTheme.border, lineWidth: 1)
-            )
-    }
-    
     // MARK: - Empty State View
     private var emptyStateView: some View {
-        VStack(spacing: 14) {
-            Image(systemName: "checkmark.seal.fill")
-                .font(.system(size: 44))
-                .foregroundColor(AppTheme.textPrimary)
-            
-            Text("No Reviews Due Right Now! 🎉")
-                .font(.system(.headline, design: .rounded, weight: .bold))
-                .foregroundColor(AppTheme.textPrimary)
-            
-            Text("Your spaced repetition Leitner intervals are up to date. You can switch to 'All Concepts' to practice ahead, or complete study timer sessions to queue new topics.")
-                .font(.system(.footnote, design: .rounded))
-                .foregroundColor(AppTheme.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .padding(28)
-        .bentoCard()
+        EmptyStateView(
+            iconName: "checkmark.seal.fill",
+            title: "No Reviews Due Right Now! 🎉",
+            message: "Your spaced repetition Leitner intervals are up to date. You can switch to 'All Concepts' to practice ahead, or complete study timer sessions to queue new topics."
+        )
     }
     
     // MARK: - Completed Session View

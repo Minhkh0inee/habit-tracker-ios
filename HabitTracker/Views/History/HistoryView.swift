@@ -287,23 +287,11 @@ public struct HistoryView: View {
     
     // MARK: - Empty State
     private var emptyStateView: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "photo.stack")
-                .font(.system(size: 40, weight: .light))
-                .foregroundColor(AppTheme.textSecondary)
-            
-            Text("No Proof Logs Yet")
-                .font(.system(.headline, design: .rounded))
-                .foregroundColor(AppTheme.textPrimary)
-            
-            Text("Complete your first study session or checklist item and snap a photo to build your proof gallery.")
-                .font(.system(.footnote, design: .rounded))
-                .foregroundColor(AppTheme.textSecondary)
-                .multilineTextAlignment(.center)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(32)
-        .bentoCard()
+        EmptyStateView(
+            iconName: "photo.stack",
+            title: "No Proof Logs Yet",
+            message: "Complete your first study session or checklist item and snap a photo to build your proof gallery."
+        )
     }
     
     // MARK: - Helpers
@@ -320,24 +308,10 @@ public struct HistoryView: View {
     }
     
     private func formatGroupHeaderDate(_ date: Date) -> String {
-        let calendar = Calendar.current
-        let formatter = DateFormatter()
-        
-        if calendar.isDateInToday(date) {
-            formatter.dateFormat = "MMM d, yyyy"
-            return "Today • \(formatter.string(from: date))"
-        } else if calendar.isDateInYesterday(date) {
-            formatter.dateFormat = "MMM d, yyyy"
-            return "Yesterday • \(formatter.string(from: date))"
-        } else {
-            formatter.dateFormat = "EEEE • MMM d, yyyy"
-            return formatter.string(from: date)
-        }
+        AppFormatters.groupHeaderDate(date)
     }
     
     private func formatTimeOnly(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+        AppFormatters.time(date)
     }
 }

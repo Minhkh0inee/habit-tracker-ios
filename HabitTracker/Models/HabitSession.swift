@@ -64,15 +64,6 @@ public final class HabitSession {
     
     // MARK: - Spaced Repetition Helpers
     public static func calculateNextReviewDate(from stage: Int) -> Date {
-        let calendar = Calendar.current
-        let daysToAdd: Int
-        switch stage {
-        case 0: daysToAdd = 1   // Review tomorrow
-        case 1: daysToAdd = 3   // Review in 3 days
-        case 2: daysToAdd = 7   // Review in 1 week
-        case 3: daysToAdd = 14  // Review in 2 weeks
-        default: daysToAdd = 30 // Monthly revision / interview-ready
-        }
-        return calendar.date(byAdding: .day, value: daysToAdd, to: Date()) ?? Date().addingTimeInterval(86400)
+        SpacedRepetitionScheduler.calculateNextReviewDate(from: stage)
     }
 }
