@@ -106,6 +106,9 @@ public struct HabitProgressView: View {
             }
             .sheet(isPresented: $showingRecallSheet) {
                 InterviewRecallView()
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+                    .interactiveDismissDisabled()
             }
         }
     }

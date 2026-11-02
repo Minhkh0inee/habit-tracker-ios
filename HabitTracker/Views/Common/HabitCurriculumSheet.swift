@@ -77,14 +77,15 @@ public struct HabitCurriculumSheet: View {
             .navigationTitle("\(habit.title) Syllabus")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
+                ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
                         dismiss()
                     }
-                    .font(.system(.body, design: .rounded, weight: .semibold))
+                    .font(.system(.body, design: .rounded, weight: .bold))
                     .foregroundColor(AppTheme.textPrimary)
                 }
             }
+            .interactiveDismissDisabled()
             .sheet(isPresented: $showingAddConceptSheet) {
                 addCustomConceptSheet
             }

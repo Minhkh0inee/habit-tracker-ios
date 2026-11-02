@@ -217,6 +217,9 @@ public struct TodayHabitsView: View {
             }
             .sheet(isPresented: $showingInterviewRecall) {
                 InterviewRecallView()
+                    .presentationDetents([.large])
+                    .presentationDragIndicator(.visible)
+                    .interactiveDismissDisabled()
             }
             .sheet(item: $habitForDirectLog) { habit in
                 SessionCompletionSheet(
@@ -234,6 +237,9 @@ public struct TodayHabitsView: View {
                         selectedTab = 1
                     }
                 )
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled()
             }
             .sheet(item: $habitForEdit) { habit in
                 EditHabitSheet(habit: habit)
