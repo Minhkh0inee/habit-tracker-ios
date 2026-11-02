@@ -11,7 +11,8 @@ struct HabitTrackerApp: App {
                 Habit.self,
                 HabitSession.self,
                 LessonItem.self,
-                InterviewQuestion.self
+                InterviewQuestion.self,
+                CurriculumConcept.self
             ])
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
             container = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -21,6 +22,9 @@ struct HabitTrackerApp: App {
             
             // Seed clean default habits if database is completely empty
             seedInitialHabitsIfNeeded(context: container.mainContext)
+            
+            // Seed curated learning roadmaps for habits that don't have concepts yet
+            seedCurriculaForHabitsIfNeeded(context: container.mainContext)
             
             // Request notification permissions & schedule daily 5:00 AM reminder
             NotificationManager.shared.requestAuthorization()
@@ -98,6 +102,42 @@ struct HabitTrackerApp: App {
             }
         } catch {
             print("Failed to seed default habits: \(error)")
+        }
+    }
+    
+    /// Pre-seeds rich curated curriculum tracks for habits if their syllabus queue is empty
+    private func seedCurriculaForHabitsIfNeeded(context: ModelContext) {
+        do {
+            let habitDescriptor = FetchDescriptor<Habit>()
+            let allHabits = try context.fetch(habitDescriptor)
+            
+            var didAddAny = false
+            for habit in allHabits {
+                if habit.curriculumQueue.isEmpty {
+                    let seedList = CurriculumSeedData.defaultConcepts(for: habit.title)
+                    for (index, seed) in seedList.enumerated() {
+                        let concept = CurriculumConcept(
+                            title: seed.title,
+                            conceptDescription: seed.description,
+                            category: habit.category,
+                            estimatedMinutes: seed.estimatedMinutes,
+                            orderIndex: index,
+                            isCompleted: false,
+                            habit: habit
+                        )
+                        context.insert(concept)
+                        habit.curriculumQueue.append(concept)
+                        didAddAny = true
+                    }
+                }
+            }
+            
+            if didAddAny {
+                try context.save()
+                print("Curated curricula seeded successfully.")
+            }
+        } catch {
+            print("Failed to seed curricula: \(error)")
         }
     }
 }

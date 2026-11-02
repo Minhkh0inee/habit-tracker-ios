@@ -11,10 +11,12 @@ A minimalist, privacy-focused iOS Habit Tracker built natively in **SwiftUI** an
 
 ## Key Features
 
+- **Adaptive Daily Concept Syllabus & Rollover Queue**: Curated roadmaps (Swift, DSA, System Design, DE, Python) auto-fit into today's target time; unfinished topics automatically roll over to the next day.
+- **Gemini AI Syllabus & Interview Generator**: On-demand AI roadmap generation and real-world interview question sync via Gemini 2.5 Flash API.
+- **Mock Interview Flashcard Recall**: Interactive revision mode with self-grading (Hard vs Nailed It) advancing concepts along the Ebbinghaus Leitner curve ($1\text{d} \to 3\text{d} \to 7\text{d} \to 14\text{d} \to 30\text{d}$).
+- **Full Habit Management**: Create, edit duration presets/icons, and safely delete habits with cascade cleanup.
 - **Countdown Focus Timer**: Built-in presets (15m, 25m, 45m, 60m) with background-safe timestamp anchoring.
 - **Photo Proof Verification**: Visual proof of completion (camera on physical iPhone; photo library fallback in Simulator).
-- **Itemized Concept & Spaced Repetition**: Dynamic post-session concept entries backed by Leitner curve spaced repetition ($1\text{d} \to 3\text{d} \to 7\text{d} \to 14\text{d} \to 30\text{d}$).
-- **Gemini 2.5 Flash AI Question Sync**: Multi-select track selector to fetch real-world interview questions dynamically into your local bank.
 - **Interactive Calendar & Proof Gallery**: Collapsible date feeds with full-resolution proof inspections.
 - **Native Apple Charts**: 7-day and 14-day study trend visualization.
 - **Daily Reminders**: 5:00 AM local notification with interactive testing.

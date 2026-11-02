@@ -26,6 +26,12 @@ public final class GeminiSyncService {
         public let difficulty: String
     }
     
+    public struct CurriculumConceptDTO: Codable {
+        public let title: String
+        public let description: String
+        public let estimatedMinutes: Int
+    }
+    
     public enum SyncError: LocalizedError {
         case missingApiKey
         case invalidURL
@@ -153,6 +159,95 @@ public final class GeminiSyncService {
             return questions
         } catch {
             throw SyncError.decodingError("Failed to decode question array: \(error.localizedDescription). Raw text: \(text)")
+        }
+    }
+    
+    /// Generates a customized, sequenced study roadmap for a technical habit using Gemini AI
+    public func generateCurriculum(
+        track: String,
+        customTopic: String? = nil,
+        targetMinutes: Int = 30,
+        apiKey: String
+    ) async throws -> [CurriculumConceptDTO] {
+        let cleanKey = apiKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !cleanKey.isEmpty else {
+            throw SyncError.missingApiKey
+        }
+        
+        let focusDetail = (customTopic != nil && !customTopic!.isEmpty) ? "focusing especially on: \(customTopic!)" : "covering foundational to advanced real-world concepts"
+        
+        let prompt = """
+        You are an elite principal software engineer and technical educator.
+        Create a 6 to 8 concept sequenced study curriculum for: "\(track)" \(focusDetail).
+        Each concept must be bite-sized, practical for software engineering interviews and real production use, with an estimated study time of around \(targetMinutes) minutes (between 20 and 45 minutes).
+        
+        Output MUST be a valid JSON array of objects with EXACTLY these keys:
+        - "title": (String, concise technical concept title, e.g., "ARC & Memory Retain Cycles")
+        - "description": (String, 1-2 sentences explaining what to master and interview implications)
+        - "estimatedMinutes": (Integer, between 15 and 45)
+        
+        Return ONLY raw JSON, with no markdown code blocks, no preamble, and no explanation.
+        """
+        
+        let endpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=\(cleanKey)"
+        guard let url = URL(string: endpoint) else {
+            throw SyncError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let requestBody: [String: Any] = [
+            "contents": [
+                [
+                    "parts": [
+                        ["text": prompt]
+                    ]
+                ]
+            ],
+            "generationConfig": [
+                "temperature": 0.3,
+                "responseMimeType": "application/json"
+            ]
+        ]
+        
+        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+            let errorString = String(data: data, encoding: .utf8) ?? "HTTP \(httpResponse.statusCode)"
+            throw SyncError.networkError("API Error (\(httpResponse.statusCode)): \(errorString)")
+        }
+        
+        struct GeminiEnvelope: Decodable {
+            struct Candidate: Decodable {
+                struct Content: Decodable {
+                    struct Part: Decodable {
+                        let text: String?
+                    }
+                    let parts: [Part]?
+                }
+                let content: Content?
+            }
+            let candidates: [Candidate]?
+        }
+        
+        let envelope = try JSONDecoder().decode(GeminiEnvelope.self, from: data)
+        guard let text = envelope.candidates?.first?.content?.parts?.first?.text, !text.isEmpty else {
+            throw SyncError.emptyResponse
+        }
+        
+        guard let jsonData = text.data(using: .utf8) else {
+            throw SyncError.decodingError("Could not convert response text to UTF8 data.")
+        }
+        
+        do {
+            let concepts = try JSONDecoder().decode([CurriculumConceptDTO].self, from: jsonData)
+            return concepts
+        } catch {
+            throw SyncError.decodingError("Failed to decode curriculum array: \(error.localizedDescription). Raw text: \(text)")
         }
     }
 }

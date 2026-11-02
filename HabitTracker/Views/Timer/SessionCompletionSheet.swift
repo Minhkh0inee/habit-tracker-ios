@@ -115,6 +115,26 @@ public struct SessionCompletionSheet: View {
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 8) {
+                                        // Today's Scheduled Curriculum Goals
+                                        if let habit = habit {
+                                            ForEach(habit.todayScheduledConcepts) { concept in
+                                                Button(action: { fillScheduledConcept(concept) }) {
+                                                    HStack(spacing: 4) {
+                                                        Image(systemName: "target")
+                                                            .font(.system(size: 9))
+                                                        Text("Goal: \(concept.title)")
+                                                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                                                    }
+                                                    .foregroundColor(AppTheme.buttonForeground)
+                                                    .padding(.horizontal, 10)
+                                                    .padding(.vertical, 5)
+                                                    .background(AppTheme.textPrimary)
+                                                    .clipShape(Capsule())
+                                                }
+                                                .buttonStyle(.plain)
+                                            }
+                                        }
+                                        
                                         // AI Synced Real Interview Questions
                                         ForEach(matchingAIQuestions) { q in
                                             Button(action: { fillAIQuestion(q) }) {
@@ -416,6 +436,16 @@ public struct SessionCompletionSheet: View {
         }
     }
     
+    private func fillScheduledConcept(_ concept: CurriculumConcept) {
+        if let lastIndex = conceptItems.indices.last,
+           conceptItems[lastIndex].title.isEmpty && conceptItems[lastIndex].notes.isEmpty {
+            conceptItems[lastIndex].title = concept.title
+            conceptItems[lastIndex].notes = concept.conceptDescription
+        } else {
+            conceptItems.append(ConceptInputItem(title: concept.title, notes: concept.conceptDescription))
+        }
+    }
+    
     private func fillAIQuestion(_ question: InterviewQuestion) {
         let noteText = "\(question.question)\n\nKey Takeaways:\n\(question.keyTakeaways)"
         if let lastIndex = conceptItems.indices.last,
@@ -495,6 +525,17 @@ public struct SessionCompletionSheet: View {
         
         if let habit = habit {
             habit.sessions.append(session)
+            
+            // Mark any matching curriculum concepts as completed
+            for item in validItems {
+                let cleanTitle = item.title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+                for concept in habit.uncompletedCurriculum {
+                    if concept.title.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() == cleanTitle {
+                        concept.isCompleted = true
+                        concept.completedDate = Date()
+                    }
+                }
+            }
         }
         
         try? modelContext.save()

@@ -5,6 +5,8 @@ public struct TodayHabitsView: View {
     @Query(filter: #Predicate<Habit> { !$0.isArchived }, sort: \Habit.createdAt)
     private var habits: [Habit]
     
+    @Query private var allLessons: [LessonItem]
+    
     @Environment(\.modelContext) private var modelContext
     
     @Binding public var selectedTab: Int
@@ -13,7 +15,11 @@ public struct TodayHabitsView: View {
     @State private var showingAddHabit: Bool = false
     @State private var showingSettings: Bool = false
     @State private var showingNotificationToast: Bool = false
+    @State private var showingInterviewRecall: Bool = false
+    
     @State private var habitForDirectLog: Habit?
+    @State private var habitForCurriculum: Habit?
+    @State private var habitForEdit: Habit?
     
     public init(selectedTab: Binding<Int>, timerViewModel: TimerViewModel) {
         self._selectedTab = selectedTab
@@ -33,6 +39,11 @@ public struct TodayHabitsView: View {
         return Double(completedCount) / Double(habits.count)
     }
     
+    private var dueReviewCount: Int {
+        let now = Date()
+        return allLessons.filter { $0.nextReviewDate <= now && !$0.isMastered }.count
+    }
+    
     public var body: some View {
         NavigationStack {
             ScrollView {
@@ -41,6 +52,45 @@ public struct TodayHabitsView: View {
                     dailySummaryCard
                         .padding(.horizontal)
                         .padding(.top, 8)
+                    
+                    // Spaced Repetition Due Alert Banner (if any concepts are due)
+                    if dueReviewCount > 0 {
+                        Button(action: { showingInterviewRecall = true }) {
+                            HStack(spacing: 12) {
+                                Image(systemName: "brain.head.profile")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(AppTheme.textPrimary)
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("INTERVIEW RECALL DUE")
+                                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                                        .foregroundColor(AppTheme.textSecondary)
+                                    
+                                    Text("\(dueReviewCount) Concepts Ready for Revision")
+                                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                                        .foregroundColor(AppTheme.textPrimary)
+                                }
+                                
+                                Spacer()
+                                
+                                HStack(spacing: 4) {
+                                    Text("Recall")
+                                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                                    Image(systemName: "arrow.right")
+                                        .font(.system(size: 11, weight: .bold))
+                                }
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 6)
+                                .background(AppTheme.textPrimary)
+                                .foregroundColor(AppTheme.buttonForeground)
+                                .clipShape(Capsule())
+                            }
+                            .padding(14)
+                            .bentoCard()
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.horizontal)
+                    }
                     
                     // Habits Section Header
                     HStack {
@@ -60,7 +110,7 @@ public struct TodayHabitsView: View {
                             .padding(.horizontal)
                             .padding(.top, 40)
                     } else {
-                        LazyVStack(spacing: 12) {
+                        LazyVStack(spacing: 14) {
                             ForEach(habits) { habit in
                                 HabitCardView(
                                     habit: habit,
@@ -71,9 +121,27 @@ public struct TodayHabitsView: View {
                                     },
                                     onDirectLog: { targetHabit in
                                         habitForDirectLog = targetHabit
+                                    },
+                                    onOpenCurriculum: { targetHabit in
+                                        habitForCurriculum = targetHabit
+                                    },
+                                    onEditHabit: { targetHabit in
+                                        habitForEdit = targetHabit
                                     }
                                 )
                                 .contextMenu {
+                                    Button {
+                                        habitForEdit = habit
+                                    } label: {
+                                        Label("Edit Habit", systemImage: "pencil")
+                                    }
+                                    
+                                    Button {
+                                        habitForCurriculum = habit
+                                    } label: {
+                                        Label("View Syllabus Roadmap", systemImage: "book.pages")
+                                    }
+                                    
                                     Button(role: .destructive) {
                                         deleteHabit(habit)
                                     } label: {
@@ -108,10 +176,18 @@ public struct TodayHabitsView: View {
                 }
                 
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: { showingAddHabit = true }) {
-                        Image(systemName: "plus")
-                            .font(.system(size: 16, weight: .semibold))
-                            .foregroundColor(AppTheme.textPrimary)
+                    HStack(spacing: 12) {
+                        Button(action: { showingInterviewRecall = true }) {
+                            Image(systemName: "brain.head.profile")
+                                .font(.system(size: 16, weight: .medium))
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
+                        
+                        Button(action: { showingAddHabit = true }) {
+                            Image(systemName: "plus")
+                                .font(.system(size: 16, weight: .semibold))
+                                .foregroundColor(AppTheme.textPrimary)
+                        }
                     }
                 }
             }
@@ -139,12 +215,28 @@ public struct TodayHabitsView: View {
             .sheet(isPresented: $showingAddHabit) {
                 AddHabitSheet()
             }
+            .sheet(isPresented: $showingInterviewRecall) {
+                InterviewRecallView()
+            }
             .sheet(item: $habitForDirectLog) { habit in
                 SessionCompletionSheet(
                     habit: habit,
                     durationMinutes: habit.targetMinutes,
                     onSaved: {}
                 )
+            }
+            .sheet(item: $habitForCurriculum) { habit in
+                HabitCurriculumSheet(
+                    habit: habit,
+                    onStartTimerWithConcept: { targetHabit, concept in
+                        timerViewModel.selectHabit(targetHabit)
+                        timerViewModel.start()
+                        selectedTab = 1
+                    }
+                )
+            }
+            .sheet(item: $habitForEdit) { habit in
+                EditHabitSheet(habit: habit)
             }
         }
     }
@@ -224,6 +316,11 @@ public struct TodayHabitsView: View {
     }
     
     private func deleteHabit(_ habit: Habit) {
+        for session in habit.sessions {
+            if let photo = session.photoFileName {
+                ImageStorageService.shared.deleteProofImage(named: photo)
+            }
+        }
         modelContext.delete(habit)
         try? modelContext.save()
     }

@@ -11,6 +11,7 @@ public struct HabitProgressView: View {
     
     @State private var timeRangeDays: Int = 7
     @State private var expandedHabitIds: Set<UUID> = []
+    @State private var showingRecallSheet: Bool = false
     
     public init() {}
     
@@ -91,6 +92,21 @@ public struct HabitProgressView: View {
             .background(AppTheme.background.ignoresSafeArea())
             .navigationTitle("Progress & Analytics")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: { showingRecallSheet = true }) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "brain.head.profile")
+                            Text("Interview Recall")
+                                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                        }
+                        .foregroundColor(AppTheme.textPrimary)
+                    }
+                }
+            }
+            .sheet(isPresented: $showingRecallSheet) {
+                InterviewRecallView()
+            }
         }
     }
     

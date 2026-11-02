@@ -14,6 +14,9 @@ public final class Habit {
     @Relationship(deleteRule: .cascade, inverse: \HabitSession.habit)
     public var sessions: [HabitSession] = []
     
+    @Relationship(deleteRule: .cascade, inverse: \CurriculumConcept.habit)
+    public var curriculumQueue: [CurriculumConcept] = []
+    
     public init(
         id: UUID = UUID(),
         title: String,
@@ -46,6 +49,43 @@ public final class Habit {
     
     public var totalMinutesToday: Int {
         completedSessionsToday.reduce(0) { $0 + $1.durationMinutes }
+    }
+    
+    // MARK: - Curriculum Roadmap & Daily Rollover Queue
+    public var uncompletedCurriculum: [CurriculumConcept] {
+        curriculumQueue
+            .filter { !$0.isCompleted }
+            .sorted { $0.orderIndex < $1.orderIndex }
+    }
+    
+    public var completedCurriculum: [CurriculumConcept] {
+        curriculumQueue
+            .filter { $0.isCompleted }
+            .sorted { ($0.completedDate ?? Date.distantPast) > ($1.completedDate ?? Date.distantPast) }
+    }
+    
+    /// Selects the concepts fitting today's target time, with automatic rollover for past-due uncompleted items
+    public var todayScheduledConcepts: [CurriculumConcept] {
+        let uncompleted = uncompletedCurriculum
+        guard !uncompleted.isEmpty else { return [] }
+        
+        var selected: [CurriculumConcept] = []
+        var accumulatedMinutes = 0
+        
+        for concept in uncompleted {
+            selected.append(concept)
+            accumulatedMinutes += concept.estimatedMinutes
+            // Stop once we meet or exceed the habit's target minutes (or at least 1-2 items)
+            if accumulatedMinutes >= targetMinutes {
+                break
+            }
+        }
+        
+        return selected
+    }
+    
+    public var todayScheduledMinutes: Int {
+        todayScheduledConcepts.reduce(0) { $0 + $1.estimatedMinutes }
     }
     
     // MARK: - Default Presets
