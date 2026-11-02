@@ -58,285 +58,10 @@ public struct SessionCompletionSheet: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 20) {
-                    // Header Card
-                    VStack(spacing: 6) {
-                        Image(systemName: "checkmark.seal.fill")
-                            .font(.system(size: 38))
-                            .foregroundColor(AppTheme.textPrimary)
-                            .padding(.top, 4)
-                        
-                        Text("Session Complete")
-                            .font(.system(.title3, design: .rounded, weight: .bold))
-                            .foregroundColor(AppTheme.textPrimary)
-                        
-                        if let habit = habit {
-                            Text("\(habit.title) • \(durationMinutes)m focus logged")
-                                .font(.system(.subheadline, design: .rounded, weight: .medium))
-                                .foregroundColor(AppTheme.textSecondary)
-                        } else {
-                            Text("\(durationMinutes)m focus session logged")
-                                .font(.system(.subheadline, design: .rounded, weight: .medium))
-                                .foregroundColor(AppTheme.textSecondary)
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.top, 4)
-                    
-                    // SECTION 1: Itemized Concepts Learned Section
-                    VStack(alignment: .leading, spacing: 14) {
-                        HStack {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("CONCEPTS LEARNED")
-                                    .font(.system(size: 10, weight: .bold, design: .rounded))
-                                    .foregroundColor(AppTheme.textSecondary)
-                                
-                                Text("What did you master today?")
-                                    .font(.system(.headline, design: .rounded, weight: .semibold))
-                                    .foregroundColor(AppTheme.textPrimary)
-                            }
-                            
-                            Spacer()
-                            
-                            Text("\(conceptItems.count) Item\(conceptItems.count > 1 ? "s" : "")")
-                                .font(.system(size: 11, weight: .bold, design: .rounded))
-                                .foregroundColor(AppTheme.textPrimary)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(AppTheme.surface)
-                                .clipShape(Capsule())
-                        }
-                        
-                        // Curated & AI-Synced Question Quick Fill Pills (Hybrid Mode)
-                        if !matchingAIQuestions.isEmpty || !curatedSuggestions.isEmpty {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Suggested Topics & Real Interview Questions:")
-                                    .font(.system(size: 10, weight: .medium, design: .rounded))
-                                    .foregroundColor(AppTheme.textSecondary)
-                                
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack(spacing: 8) {
-                                        // Today's Scheduled Curriculum Goals
-                                        if let habit = habit {
-                                            ForEach(habit.todayScheduledConcepts) { concept in
-                                                Button(action: { fillScheduledConcept(concept) }) {
-                                                    HStack(spacing: 4) {
-                                                        Image(systemName: "target")
-                                                            .font(.system(size: 9))
-                                                        Text("Goal: \(concept.title)")
-                                                            .font(.system(size: 11, weight: .bold, design: .rounded))
-                                                    }
-                                                    .foregroundColor(AppTheme.buttonForeground)
-                                                    .padding(.horizontal, 10)
-                                                    .padding(.vertical, 5)
-                                                    .background(AppTheme.textPrimary)
-                                                    .clipShape(Capsule())
-                                                }
-                                                .buttonStyle(.plain)
-                                            }
-                                        }
-                                        
-                                        // AI Synced Real Interview Questions
-                                        ForEach(matchingAIQuestions) { q in
-                                            Button(action: { fillAIQuestion(q) }) {
-                                                HStack(spacing: 4) {
-                                                    Image(systemName: "sparkles")
-                                                        .font(.system(size: 9))
-                                                        .foregroundColor(Color.green)
-                                                    Text("\(q.companyTag): \(q.title)")
-                                                        .font(.system(size: 11, weight: .semibold, design: .rounded))
-                                                }
-                                                .foregroundColor(AppTheme.textPrimary)
-                                                .padding(.horizontal, 10)
-                                                .padding(.vertical, 5)
-                                                .background(AppTheme.surface)
-                                                .clipShape(Capsule())
-                                                .overlay(
-                                                    Capsule().stroke(AppTheme.border, lineWidth: 1)
-                                                )
-                                            }
-                                            .buttonStyle(.plain)
-                                        }
-                                        
-                                        // Curated Question Bank
-                                        ForEach(curatedSuggestions) { concept in
-                                            Button(action: { fillSuggestedConcept(concept) }) {
-                                                HStack(spacing: 4) {
-                                                    Image(systemName: "book.closed")
-                                                        .font(.system(size: 9))
-                                                    Text(concept.title)
-                                                        .font(.system(size: 11, weight: .medium, design: .rounded))
-                                                }
-                                                .foregroundColor(AppTheme.textPrimary)
-                                                .padding(.horizontal, 10)
-                                                .padding(.vertical, 5)
-                                                .background(AppTheme.surface)
-                                                .clipShape(Capsule())
-                                                .overlay(
-                                                    Capsule().stroke(AppTheme.border, lineWidth: 1)
-                                                )
-                                            }
-                                            .buttonStyle(.plain)
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        
-                        // Dynamic List of Concept Input Cards
-                        VStack(spacing: 12) {
-                            ForEach(Array(conceptItems.enumerated()), id: \.element.id) { index, item in
-                                conceptItemCard(index: index)
-                            }
-                        }
-                        
-                        // "+ Add Another Concept" Button
-                        Button(action: addAnotherConcept) {
-                            HStack(spacing: 8) {
-                                Image(systemName: "plus.circle.fill")
-                                    .font(.system(size: 15))
-                                Text("Add Another Concept")
-                                    .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                            }
-                            .foregroundColor(AppTheme.textPrimary)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 12)
-                            .background(AppTheme.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                    .stroke(AppTheme.border, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
-                            )
-                        }
-                        .buttonStyle(.plain)
-                    }
-                    .padding(16)
-                    .bentoCard()
-                    .padding(.horizontal)
-                    
-                    // SECTION 2: Photo Proof of Work
-                    VStack(alignment: .leading, spacing: 12) {
-                        HStack {
-                            Text("Photo Proof of Work")
-                                .font(.system(.headline, design: .rounded, weight: .semibold))
-                                .foregroundColor(AppTheme.textPrimary)
-                            Spacer()
-                            Text(capturedImage != nil ? "Captured" : "Optional")
-                                .font(.system(size: 11, weight: .medium, design: .rounded))
-                                .foregroundColor(AppTheme.textSecondary)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(AppTheme.surface)
-                                .clipShape(Capsule())
-                        }
-                        
-                        if let image = capturedImage {
-                            VStack(spacing: 10) {
-                                Image(uiImage: image)
-                                    .resizable()
-                                    .scaledToFill()
-                                    .frame(maxWidth: .infinity)
-                                    .frame(height: 180)
-                                    .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 12, style: .continuous)
-                                            .stroke(AppTheme.border, lineWidth: 1)
-                                    )
-                                
-                                HStack(spacing: 10) {
-                                    Button(action: openCameraOrPicker) {
-                                        HStack(spacing: 6) {
-                                            Image(systemName: "camera.fill")
-                                            Text("Retake")
-                                        }
-                                        .font(.system(.subheadline, design: .rounded, weight: .medium))
-                                        .foregroundColor(AppTheme.textPrimary)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 8)
-                                        .background(AppTheme.surface)
-                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                    }
-                                    
-                                    Button(action: { showingPhotoPicker = true }) {
-                                        HStack(spacing: 6) {
-                                            Image(systemName: "photo.on.rectangle")
-                                            Text("Gallery")
-                                        }
-                                        .font(.system(.subheadline, design: .rounded, weight: .medium))
-                                        .foregroundColor(AppTheme.textPrimary)
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 8)
-                                        .background(AppTheme.surface)
-                                        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                                    }
-                                }
-                            }
-                        } else {
-                            HStack(spacing: 12) {
-                                Button(action: openCameraOrPicker) {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: "camera.fill")
-                                        Text("Snap Photo")
-                                    }
-                                    .font(.system(.subheadline, design: .rounded, weight: .medium))
-                                    .foregroundColor(AppTheme.textPrimary)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 12)
-                                    .background(AppTheme.surface)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                            .stroke(AppTheme.border, lineWidth: 1)
-                                    )
-                                }
-                                .buttonStyle(.plain)
-                                
-                                Button(action: { showingPhotoPicker = true }) {
-                                    HStack(spacing: 6) {
-                                        Image(systemName: "photo")
-                                        Text("Pick Library")
-                                    }
-                                    .font(.system(.subheadline, design: .rounded, weight: .medium))
-                                    .foregroundColor(AppTheme.textPrimary)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 12)
-                                    .background(AppTheme.surface)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                            .stroke(AppTheme.border, lineWidth: 1)
-                                    )
-                                }
-                                .buttonStyle(.plain)
-                            }
-                        }
-                    }
-                    .padding(16)
-                    .bentoCard()
-                    .padding(.horizontal)
-                    
-                    // Submit All Button
-                    VStack(spacing: 12) {
-                        Button(action: saveSession) {
-                            if isSaving {
-                                ProgressView()
-                                    .tint(AppTheme.buttonForeground)
-                            } else {
-                                Text("Submit & Save \(validItemCount > 0 ? "\(validItemCount) Concept(s)" : "Session")")
-                            }
-                        }
-                        .primaryButton()
-                        .disabled(isSaving)
-                        
-                        Button("Discard Session") {
-                            dismiss()
-                        }
-                        .font(.system(.subheadline, design: .rounded))
-                        .foregroundColor(AppTheme.textSecondary)
-                        .padding(.top, 4)
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 4)
-                    .padding(.bottom, 24)
+                    headerSection
+                    conceptsSection
+                    photoProofSection
+                    submitButtonsSection
                 }
             }
             .background(AppTheme.background.ignoresSafeArea())
@@ -357,6 +82,317 @@ public struct SessionCompletionSheet: View {
         }
     }
     
+    // MARK: - Header Section
+    private var headerSection: some View {
+        VStack(spacing: 6) {
+            Image(systemName: "checkmark.seal.fill")
+                .font(.system(size: 38))
+                .foregroundColor(AppTheme.textPrimary)
+                .padding(.top, 4)
+            
+            Text("Session Complete")
+                .font(.system(.title3, design: .rounded, weight: .bold))
+                .foregroundColor(AppTheme.textPrimary)
+            
+            if let habit = habit {
+                Text("\(habit.title) • \(durationMinutes)m focus logged")
+                    .font(.system(.subheadline, design: .rounded, weight: .medium))
+                    .foregroundColor(AppTheme.textSecondary)
+            } else {
+                Text("\(durationMinutes)m focus session logged")
+                    .font(.system(.subheadline, design: .rounded, weight: .medium))
+                    .foregroundColor(AppTheme.textSecondary)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 4)
+    }
+    
+    // MARK: - Concepts Learned Section
+    private var conceptsSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("CONCEPTS LEARNED")
+                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                        .foregroundColor(AppTheme.textSecondary)
+                    
+                    Text("What did you master today?")
+                        .font(.system(.headline, design: .rounded, weight: .semibold))
+                        .foregroundColor(AppTheme.textPrimary)
+                }
+                
+                Spacer()
+                
+                Text("\(conceptItems.count) Item\(conceptItems.count > 1 ? "s" : "")")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(AppTheme.textPrimary)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(AppTheme.surface)
+                    .clipShape(Capsule())
+            }
+            
+            suggestedPillsSection
+            
+            // Dynamic List of Concept Input Cards
+            VStack(spacing: 12) {
+                ForEach(Array(conceptItems.enumerated()), id: \.element.id) { index, item in
+                    conceptItemCard(index: index)
+                }
+            }
+            
+            // "+ Add Another Concept" Button
+            Button(action: addAnotherConcept) {
+                HStack(spacing: 8) {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.system(size: 15))
+                    Text("Add Another Concept")
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                }
+                .foregroundColor(AppTheme.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(AppTheme.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .stroke(AppTheme.border, style: StrokeStyle(lineWidth: 1, dash: [4, 4]))
+                )
+            }
+            .buttonStyle(.plain)
+        }
+        .padding(16)
+        .bentoCard()
+        .padding(.horizontal)
+    }
+    
+    // MARK: - Suggested Quick-Fill Pills
+    @ViewBuilder
+    private var suggestedPillsSection: some View {
+        let scheduledConcepts = habit?.todayScheduledConcepts ?? []
+        let hasContent = !scheduledConcepts.isEmpty || !matchingAIQuestions.isEmpty || !curatedSuggestions.isEmpty
+        
+        if hasContent {
+            VStack(alignment: .leading, spacing: 6) {
+                Text("Suggested Topics & Real Interview Questions:")
+                    .font(.system(size: 10, weight: .medium, design: .rounded))
+                    .foregroundColor(AppTheme.textSecondary)
+                
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(scheduledConcepts, id: \.id) { concept in
+                            curriculumGoalPill(title: concept.title, notes: concept.conceptDescription)
+                        }
+                        
+                        ForEach(matchingAIQuestions, id: \.id) { q in
+                            aiQuestionPill(question: q)
+                        }
+                        
+                        ForEach(curatedSuggestions, id: \.id) { concept in
+                            curatedConceptPill(concept: concept)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func curriculumGoalPill(title: String, notes: String) -> some View {
+        Button(action: { fillConcept(title: title, notes: notes) }) {
+            HStack(spacing: 4) {
+                Image(systemName: "target")
+                    .font(.system(size: 9))
+                Text("Goal: \(title)")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+            }
+            .foregroundColor(AppTheme.buttonForeground)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(AppTheme.textPrimary)
+            .clipShape(Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+    
+    private func aiQuestionPill(question: InterviewQuestion) -> some View {
+        Button(action: { fillAIQuestion(question) }) {
+            HStack(spacing: 4) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 9))
+                    .foregroundColor(Color.green)
+                Text("\(question.companyTag): \(question.title)")
+                    .font(.system(size: 11, weight: .semibold, design: .rounded))
+            }
+            .foregroundColor(AppTheme.textPrimary)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(AppTheme.surface)
+            .clipShape(Capsule())
+            .overlay(
+                Capsule().stroke(AppTheme.border, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+    
+    private func curatedConceptPill(concept: EngineeringConcept) -> some View {
+        Button(action: { fillSuggestedConcept(concept) }) {
+            HStack(spacing: 4) {
+                Image(systemName: "book.closed")
+                    .font(.system(size: 9))
+                Text(concept.title)
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+            }
+            .foregroundColor(AppTheme.textPrimary)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 5)
+            .background(AppTheme.surface)
+            .clipShape(Capsule())
+            .overlay(
+                Capsule().stroke(AppTheme.border, lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+    
+    // MARK: - Photo Proof Section
+    private var photoProofSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Photo Proof of Work")
+                    .font(.system(.headline, design: .rounded, weight: .semibold))
+                    .foregroundColor(AppTheme.textPrimary)
+                Spacer()
+                Text(capturedImage != nil ? "Captured" : "Optional")
+                    .font(.system(size: 11, weight: .medium, design: .rounded))
+                    .foregroundColor(AppTheme.textSecondary)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(AppTheme.surface)
+                    .clipShape(Capsule())
+            }
+            
+            if let image = capturedImage {
+                capturedImagePreview(image)
+            } else {
+                photoActionButtons
+            }
+        }
+        .padding(16)
+        .bentoCard()
+        .padding(.horizontal)
+    }
+    
+    private func capturedImagePreview(_ image: UIImage) -> some View {
+        VStack(spacing: 10) {
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(maxWidth: .infinity)
+                .frame(height: 180)
+                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .stroke(AppTheme.border, lineWidth: 1)
+                )
+            
+            HStack(spacing: 10) {
+                Button(action: openCameraOrPicker) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "camera.fill")
+                        Text("Retake")
+                    }
+                    .font(.system(.subheadline, design: .rounded, weight: .medium))
+                    .foregroundColor(AppTheme.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(AppTheme.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                }
+                
+                Button(action: { showingPhotoPicker = true }) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "photo.on.rectangle")
+                        Text("Gallery")
+                    }
+                    .font(.system(.subheadline, design: .rounded, weight: .medium))
+                    .foregroundColor(AppTheme.textPrimary)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 8)
+                    .background(AppTheme.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                }
+            }
+        }
+    }
+    
+    private var photoActionButtons: some View {
+        HStack(spacing: 12) {
+            Button(action: openCameraOrPicker) {
+                HStack(spacing: 6) {
+                    Image(systemName: "camera.fill")
+                    Text("Snap Photo")
+                }
+                .font(.system(.subheadline, design: .rounded, weight: .medium))
+                .foregroundColor(AppTheme.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(AppTheme.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(AppTheme.border, lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            
+            Button(action: { showingPhotoPicker = true }) {
+                HStack(spacing: 6) {
+                    Image(systemName: "photo")
+                    Text("Pick Library")
+                }
+                .font(.system(.subheadline, design: .rounded, weight: .medium))
+                .foregroundColor(AppTheme.textPrimary)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(AppTheme.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                        .stroke(AppTheme.border, lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+        }
+    }
+    
+    // MARK: - Submit Buttons
+    private var submitButtonsSection: some View {
+        VStack(spacing: 12) {
+            Button(action: saveSession) {
+                if isSaving {
+                    ProgressView()
+                        .tint(AppTheme.buttonForeground)
+                } else {
+                    Text("Submit & Save \(validItemCount > 0 ? "\(validItemCount) Concept(s)" : "Session")")
+                }
+            }
+            .primaryButton()
+            .disabled(isSaving)
+            
+            Button("Discard Session") {
+                dismiss()
+            }
+            .font(.system(.subheadline, design: .rounded))
+            .foregroundColor(AppTheme.textSecondary)
+            .padding(.top, 4)
+        }
+        .padding(.horizontal)
+        .padding(.top, 4)
+        .padding(.bottom, 24)
+    }
+    
     // MARK: - Single Concept Input Card
     private func conceptItemCard(index: Int) -> some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -367,7 +403,6 @@ public struct SessionCompletionSheet: View {
                 
                 Spacer()
                 
-                // Allow removing if there is more than 1 item
                 if conceptItems.count > 1 {
                     Button(action: { removeConceptItem(at: index) }) {
                         Image(systemName: "trash")
@@ -378,7 +413,6 @@ public struct SessionCompletionSheet: View {
                 }
             }
             
-            // Concept Title Field
             TextField("Concept title (e.g. Binary Search invariant)", text: $conceptItems[index].title)
                 .font(.system(.body, design: .rounded))
                 .padding(10)
@@ -389,7 +423,6 @@ public struct SessionCompletionSheet: View {
                         .stroke(AppTheme.border, lineWidth: 1)
                 )
             
-            // Key Takeaway / Notes Field (Paragraph)
             TextField("Key takeaway, formula, tradeoff, or edge cases...", text: $conceptItems[index].notes, axis: .vertical)
                 .font(.system(.subheadline, design: .rounded))
                 .lineLimit(2...4)
@@ -412,7 +445,10 @@ public struct SessionCompletionSheet: View {
     
     // MARK: - Actions
     private var validItemCount: Int {
-        conceptItems.filter { !$0.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !$0.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }.count
+        conceptItems.filter {
+            !$0.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+            !$0.notes.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }.count
     }
     
     private func addAnotherConcept() {
@@ -423,38 +459,34 @@ public struct SessionCompletionSheet: View {
     
     private func removeConceptItem(at index: Int) {
         guard conceptItems.count > 1, index < conceptItems.count else { return }
+        withAnimation(.easeInOut(duration: 0.2)) {
+            conceptItems.remove(at: index)
+        }
+    }
+    
+    private func fillConcept(title: String, notes: String) {
+        let cleanTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        if let lastIndex = conceptItems.indices.last,
+           conceptItems[lastIndex].title.isEmpty && conceptItems[lastIndex].notes.isEmpty {
+            conceptItems[lastIndex].title = cleanTitle
+            conceptItems[lastIndex].notes = cleanNotes
+        } else {
+            conceptItems.append(ConceptInputItem(title: cleanTitle, notes: cleanNotes))
+        }
     }
     
     private func fillSuggestedConcept(_ concept: EngineeringConcept) {
-        // If last item is empty, fill it; otherwise append new item
-        if let lastIndex = conceptItems.indices.last,
-           conceptItems[lastIndex].title.isEmpty && conceptItems[lastIndex].notes.isEmpty {
-            conceptItems[lastIndex].title = concept.title
-            conceptItems[lastIndex].notes = concept.summary
-        } else {
-            conceptItems.append(ConceptInputItem(title: concept.title, notes: concept.summary))
-        }
+        fillConcept(title: concept.title, notes: concept.summary)
     }
     
     private func fillScheduledConcept(_ concept: CurriculumConcept) {
-        if let lastIndex = conceptItems.indices.last,
-           conceptItems[lastIndex].title.isEmpty && conceptItems[lastIndex].notes.isEmpty {
-            conceptItems[lastIndex].title = concept.title
-            conceptItems[lastIndex].notes = concept.conceptDescription
-        } else {
-            conceptItems.append(ConceptInputItem(title: concept.title, notes: concept.conceptDescription))
-        }
+        fillConcept(title: concept.title, notes: concept.conceptDescription)
     }
     
     private func fillAIQuestion(_ question: InterviewQuestion) {
         let noteText = "\(question.question)\n\nKey Takeaways:\n\(question.keyTakeaways)"
-        if let lastIndex = conceptItems.indices.last,
-           conceptItems[lastIndex].title.isEmpty && conceptItems[lastIndex].notes.isEmpty {
-            conceptItems[lastIndex].title = question.title
-            conceptItems[lastIndex].notes = noteText
-        } else {
-            conceptItems.append(ConceptInputItem(title: question.title, notes: noteText))
-        }
+        fillConcept(title: question.title, notes: noteText)
     }
     
     private func openCameraOrPicker() {
