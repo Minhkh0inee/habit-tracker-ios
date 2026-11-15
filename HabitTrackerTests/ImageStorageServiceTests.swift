@@ -16,7 +16,9 @@ final class ImageStorageServiceTests: XCTestCase {
     // Helper to generate a test image
     private func createTestImage(width: CGFloat, height: CGFloat, color: UIColor = .blue) -> UIImage {
         let size = CGSize(width: width, height: height)
-        let renderer = UIGraphicsImageRenderer(size: size)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0
+        let renderer = UIGraphicsImageRenderer(size: size, format: format)
         return renderer.image { ctx in
             color.setFill()
             ctx.fill(CGRect(origin: .zero, size: size))

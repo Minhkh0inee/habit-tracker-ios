@@ -62,7 +62,9 @@ public final class ImageStorageService {
         let ratio = maxDimension / maxSide
         let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
         
-        let renderer = UIGraphicsImageRenderer(size: newSize)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1.0
+        let renderer = UIGraphicsImageRenderer(size: newSize, format: format)
         return renderer.image { _ in
             image.draw(in: CGRect(origin: .zero, size: newSize))
         }
