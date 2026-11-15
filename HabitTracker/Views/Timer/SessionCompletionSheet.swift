@@ -572,6 +572,8 @@ public struct SessionCompletionSheet: View {
         
         try? modelContext.save()
         
+        NotificationManager.shared.cancelAtRiskNotification()
+        
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
         

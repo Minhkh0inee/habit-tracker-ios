@@ -1,6 +1,11 @@
 import SwiftUI
 import SwiftData
 
+private enum ViewConstants {
+    static let testPushDelaySeconds: Double = 2.0
+    static let toastDisplayDurationSeconds: Double = 3.0
+}
+
 public struct TodayHabitsView: View {
     @Query(filter: #Predicate<Habit> { !$0.isArchived }, sort: \Habit.createdAt)
     private var habits: [Habit]
@@ -52,6 +57,12 @@ public struct TodayHabitsView: View {
                     dailySummaryCard
                         .padding(.horizontal)
                         .padding(.top, 8)
+
+                    // 🔥 Streak Banner
+                    if !habits.isEmpty {
+                        StreakBannerView(habits: habits)
+                            .padding(.horizontal)
+                    }
                     
                     // Spaced Repetition Due Alert Banner (if any concepts are due)
                     if dueReviewCount > 0 {
@@ -239,6 +250,12 @@ public struct TodayHabitsView: View {
             .sheet(item: $habitForEdit) { habit in
                 EditHabitSheet(habit: habit)
             }
+            .onAppear {
+                NotificationManager.shared.syncAtRiskNotification(habits: habits)
+            }
+            .onChange(of: completedCount) { _, _ in
+                NotificationManager.shared.syncAtRiskNotification(habits: habits)
+            }
         }
     }
     
@@ -304,11 +321,11 @@ public struct TodayHabitsView: View {
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
         
-        NotificationManager.shared.sendTestNotification(delaySeconds: 2) {
+        NotificationManager.shared.sendTestNotification(delaySeconds: ViewConstants.testPushDelaySeconds) {
             withAnimation(.spring()) {
                 showingNotificationToast = true
             }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + ViewConstants.toastDisplayDurationSeconds) {
                 withAnimation(.easeOut) {
                     showingNotificationToast = false
                 }

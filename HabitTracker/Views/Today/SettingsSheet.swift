@@ -1,6 +1,11 @@
 import SwiftUI
 import SwiftData
 
+private enum SettingsConstants {
+    static let testPushDelaySeconds: Double = 2.0
+    static let testAtRiskStreakDays: Int = 5
+}
+
 public struct SettingsSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
@@ -13,7 +18,16 @@ public struct SettingsSheet: View {
         return Calendar.current.date(from: comps) ?? Date()
     }()
     
+    @State private var isEveningStreakEnabled: Bool = NotificationManager.shared.isEveningStreakReminderEnabled
+    @State private var eveningReminderDate: Date = {
+        var comps = DateComponents()
+        comps.hour = NotificationManager.shared.eveningReminderHour
+        comps.minute = NotificationManager.shared.eveningReminderMinute
+        return Calendar.current.date(from: comps) ?? Date()
+    }()
+    
     @State private var showTestAlert: Bool = false
+    @State private var showEveningTestAlert: Bool = false
     @State private var showResetConfirmation: Bool = false
     @State private var showAISyncSheet: Bool = false
     
@@ -49,6 +63,43 @@ public struct SettingsSheet: View {
                                 Image(systemName: "bell.badge.fill")
                                     .foregroundColor(AppTheme.textPrimary)
                                 Text("Test Notification Push (Fires in 2s)")
+                                    .fontWeight(.medium)
+                            }
+                            .foregroundColor(AppTheme.textPrimary)
+                        }
+                    }
+                }
+                
+                Section(
+                    header: Text("Evening Streak Protection").foregroundColor(AppTheme.textSecondary),
+                    footer: Text("Automatically alerts you in the evening if your streak has not been completed yet today.").foregroundColor(AppTheme.textSecondary).font(.caption)
+                ) {
+                    Toggle("At-Risk Evening Alert", isOn: $isEveningStreakEnabled)
+                        .onChange(of: isEveningStreakEnabled) { _, newValue in
+                            if newValue {
+                                NotificationManager.shared.requestAuthorization { granted in
+                                    if granted {
+                                        updateEveningReminderTime()
+                                    } else {
+                                        isEveningStreakEnabled = false
+                                    }
+                                }
+                            } else {
+                                NotificationManager.shared.isEveningStreakReminderEnabled = false
+                            }
+                        }
+                    
+                    if isEveningStreakEnabled {
+                        DatePicker("Alert Time", selection: $eveningReminderDate, displayedComponents: .hourAndMinute)
+                            .onChange(of: eveningReminderDate) { _, _ in
+                                updateEveningReminderTime()
+                            }
+                        
+                        Button(action: sendEveningTest) {
+                            HStack(spacing: 8) {
+                                Image(systemName: "flame.fill")
+                                    .foregroundColor(.orange)
+                                Text("Test At-Risk Alert (Fires in 2s)")
                                     .fontWeight(.medium)
                             }
                             .foregroundColor(AppTheme.textPrimary)
@@ -129,6 +180,11 @@ public struct SettingsSheet: View {
             } message: {
                 Text("Test banner will slide down from the top of your screen in 2 seconds! You can also lock your phone to test it on the lock screen.")
             }
+            .alert("At-Risk Alert Scheduled", isPresented: $showEveningTestAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("🔥 Test at-risk alert will fire in 2 seconds! Lock your screen or stay in the app to see it.")
+            }
             .confirmationDialog(
                 "Reset All Progress?",
                 isPresented: $showResetConfirmation,
@@ -158,11 +214,33 @@ public struct SettingsSheet: View {
         NotificationManager.shared.scheduleDailyReminder(hour: hour, minute: minute)
     }
     
+    private func updateEveningReminderTime() {
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: eveningReminderDate)
+        let minute = calendar.component(.minute, from: eveningReminderDate)
+        
+        NotificationManager.shared.eveningReminderHour = hour
+        NotificationManager.shared.eveningReminderMinute = minute
+        NotificationManager.shared.isEveningStreakReminderEnabled = true
+    }
+    
     private func sendTest() {
         NotificationManager.shared.requestAuthorization { granted in
             if granted {
-                NotificationManager.shared.sendTestNotification(delaySeconds: 2)
+                NotificationManager.shared.sendTestNotification(delaySeconds: SettingsConstants.testPushDelaySeconds)
                 showTestAlert = true
+            }
+        }
+    }
+    
+    private func sendEveningTest() {
+        NotificationManager.shared.requestAuthorization { granted in
+            if granted {
+                NotificationManager.shared.sendTestAtRiskNotification(
+                    streak: SettingsConstants.testAtRiskStreakDays,
+                    delaySeconds: SettingsConstants.testPushDelaySeconds
+                )
+                showEveningTestAlert = true
             }
         }
     }
