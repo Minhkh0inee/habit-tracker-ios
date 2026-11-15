@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F1A0003128DE5F9B9F200031 /* Habit+Streak.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */; };
+		F1A0003328DE5F9B9F200033 /* StreakWidgetSnapshotService+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */; };
+		F1A0000228DE5F9B9F200002 /* StreakWidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */; };
+		F1A0000528DE5F9B9F200005 /* StreakWidgetSnapshotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */; };
+		F1A0000328DE5F9B9F200003 /* StreakWidgetData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */; };
+		F1A0000628DE5F9B9F200006 /* StreakWidgetSnapshotService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */; };
+		F1A0000728DE5F9B9F200007 /* StreakEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF6600AA /* StreakEngine.swift */; };
+		F1A0000928DE5F9B9F200009 /* StreakWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0000828DE5F9B9F200008 /* StreakWidgetBundle.swift */; };
+		F1A0001128DE5F9B9F200011 /* StreakWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0001028DE5F9B9F200010 /* StreakWidget.swift */; };
+		F1A0001628DE5F9B9F200016 /* HabitTrackerWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = F1A0001528DE5F9B9F200015 /* HabitTrackerWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		39A8857FB1055D96913A39B9 /* AIQuestionSyncSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEC7E2774225DA4AE9C7F59 /* AIQuestionSyncSheet.swift */; };
 		A92EC685275359EDB1648155 /* AddHabitSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ED88C1EB1358B0BBCF0DBA /* AddHabitSheet.swift */; };
 		D6B9E561A6425CCE8E72454B /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90827F2270A25E02B2F47DEE /* CameraView.swift */; };
@@ -46,7 +56,42 @@
 		CC33DD44EE55FF6600AABB11 /* StreakBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F1A0002228DE5F9B9F200022 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FA61A8DAFFA59F9B08F2054 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F1A0001728DE5F9B9F200017;
+			remoteInfo = HabitTrackerWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		F1A0002428DE5F9B9F200024 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F1A0001628DE5F9B9F200016 /* HabitTrackerWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+
 /* Begin PBXFileReference section */
+		F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/Habit+Streak.swift"; sourceTree = "<group>"; };
+		F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakWidgetSnapshotService+App.swift"; sourceTree = "<group>"; };
+		F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakWidgetData.swift"; sourceTree = "<group>"; };
+		F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakWidgetSnapshotService.swift"; sourceTree = "<group>"; };
+		F1A0000828DE5F9B9F200008 /* StreakWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakWidgetBundle.swift; sourceTree = "<group>"; };
+		F1A0001028DE5F9B9F200010 /* StreakWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakWidget.swift; sourceTree = "<group>"; };
+		F1A0001228DE5F9B9F200012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1A0001328DE5F9B9F200013 /* HabitTrackerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitTrackerWidget.entitlements; sourceTree = "<group>"; };
+		F1A0001428DE5F9B9F200014 /* HabitTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitTracker.entitlements; sourceTree = "<group>"; };
+		F1A0001528DE5F9B9F200015 /* HabitTrackerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HabitTrackerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BEC7E2774225DA4AE9C7F59 /* AIQuestionSyncSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/AIQuestionSyncSheet.swift"; sourceTree = "<group>"; };
 		85ED88C1EB1358B0BBCF0DBA /* AddHabitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/AddHabitSheet.swift"; sourceTree = "<group>"; };
 		90827F2270A25E02B2F47DEE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/CameraView.swift"; sourceTree = "<group>"; };
@@ -89,6 +134,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F1A0001928DE5F9B9F200019 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E4F1E235C0175CBBB720F037 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -99,10 +151,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F1A0002128DE5F9B9F200021 /* HabitTrackerWidget */ = {
+			isa = PBXGroup;
+			children = (
+				F1A0000828DE5F9B9F200008 /* StreakWidgetBundle.swift */,
+				F1A0001028DE5F9B9F200010 /* StreakWidget.swift */,
+				F1A0001228DE5F9B9F200012 /* Info.plist */,
+				F1A0001328DE5F9B9F200013 /* HabitTrackerWidget.entitlements */,
+			);
+			path = HabitTrackerWidget;
+			sourceTree = "<group>";
+		};
 		5CB185C187005A38BFAE731A = {
 			isa = PBXGroup;
 			children = (
 				9A3C443CCB66541D85EC094D /* HabitTracker */,
+				F1A0002128DE5F9B9F200021 /* HabitTrackerWidget */,
 				A4001AD72279510C834E13F3 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -148,6 +212,11 @@
 				DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */,
 				887EA8CF02AC577DBC72B720 /* Info.plist */,
 				62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */,
+				F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */,
+				F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */,
+				F1A0001428DE5F9B9F200014 /* HabitTracker.entitlements */,
+				F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */,
+				F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */,
 			);
 			path = HabitTracker;
 			sourceTree = "<group>";
@@ -156,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				BFCD8D68FD9C5FE788962C45 /* HabitTracker.app */,
+				F1A0001528DE5F9B9F200015 /* HabitTrackerWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,6 +233,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F1A0001728DE5F9B9F200017 /* HabitTrackerWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1A0002528DE5F9B9F200025 /* Build configuration list for PBXNativeTarget "HabitTrackerWidgetExtension" */;
+			buildPhases = (
+				F1A0001828DE5F9B9F200018 /* Sources */,
+				F1A0001928DE5F9B9F200019 /* Frameworks */,
+				F1A0002028DE5F9B9F200020 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F1A0002328DE5F9B9F200023 /* PBXTargetDependency */,
+			);
+			name = HabitTrackerWidgetExtension;
+			productName = HabitTrackerWidgetExtension;
+			productReference = F1A0001528DE5F9B9F200015 /* HabitTrackerWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		AB3A6539DA165034AF01E547 /* HabitTracker */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BB5689B326DE5F9B9F205C60 /* Build configuration list for PBXNativeTarget "HabitTracker" */;
@@ -170,10 +258,12 @@
 				AFA80E6BB8525F92B71B380B /* Sources */,
 				E4F1E235C0175CBBB720F037 /* Frameworks */,
 				D75E1797E1F253AE80BA6BDD /* Resources */,
+				F1A0002428DE5F9B9F200024 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F1A0002328DE5F9B9F200023 /* PBXTargetDependency */,
 			);
 			name = HabitTracker;
 			productName = HabitTracker;
@@ -192,6 +282,9 @@
 					AB3A6539DA165034AF01E547 = {
 						CreatedOnToolsVersion = 15.0;
 					};
+					F1A0001728DE5F9B9F200017 = {
+						CreatedOnToolsVersion = 15.0;
+					};
 				};
 			};
 			buildConfigurationList = CF65E067F0B15AE5BD53DCE0 /* Build configuration list for PBXProject "HabitTracker" */;
@@ -208,11 +301,19 @@
 			projectRoot = "";
 			targets = (
 				AB3A6539DA165034AF01E547 /* HabitTracker */,
+				F1A0001728DE5F9B9F200017 /* HabitTrackerWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F1A0002028DE5F9B9F200020 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D75E1797E1F253AE80BA6BDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -224,10 +325,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F1A0001828DE5F9B9F200018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1A0000928DE5F9B9F200009 /* StreakWidgetBundle.swift in Sources */,
+				F1A0001128DE5F9B9F200011 /* StreakWidget.swift in Sources */,
+				F1A0000328DE5F9B9F200003 /* StreakWidgetData.swift in Sources */,
+				F1A0000628DE5F9B9F200006 /* StreakWidgetSnapshotService.swift in Sources */,
+				F1A0000728DE5F9B9F200007 /* StreakEngine.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		AFA80E6BB8525F92B71B380B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1A0003128DE5F9B9F200031 /* Habit+Streak.swift in Sources */,
+				F1A0003328DE5F9B9F200033 /* StreakWidgetSnapshotService+App.swift in Sources */,
+				F1A0000228DE5F9B9F200002 /* StreakWidgetData.swift in Sources */,
+				F1A0000528DE5F9B9F200005 /* StreakWidgetSnapshotService.swift in Sources */,
 				39A8857FB1055D96913A39B9 /* AIQuestionSyncSheet.swift in Sources */,
 				A92EC685275359EDB1648155 /* AddHabitSheet.swift in Sources */,
 				D6B9E561A6425CCE8E72454B /* CameraView.swift in Sources */,
@@ -269,7 +386,69 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F1A0002328DE5F9B9F200023 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F1A0001728DE5F9B9F200017 /* HabitTrackerWidgetExtension */;
+			targetProxy = F1A0002228DE5F9B9F200022 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+
 /* Begin XCBuildConfiguration section */
+		F1A0002628DE5F9B9F200026 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HabitTrackerWidget/HabitTrackerWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HabitTrackerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.habittracker.app.StreakWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F1A0002728DE5F9B9F200027 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = HabitTrackerWidget/HabitTrackerWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = HabitTrackerWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.habittracker.app.StreakWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		64A2CE01B3D05144835B1AF2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,6 +500,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
+				CODE_SIGN_ENTITLEMENTS = HabitTracker/HabitTracker.entitlements;
 				INFOPLIST_FILE = HabitTracker/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -345,6 +525,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
+				CODE_SIGN_ENTITLEMENTS = HabitTracker/HabitTracker.entitlements;
 				INFOPLIST_FILE = HabitTracker/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -363,6 +544,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F1A0002528DE5F9B9F200025 /* Build configuration list for PBXNativeTarget "HabitTrackerWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1A0002628DE5F9B9F200026 /* Debug */,
+				F1A0002728DE5F9B9F200027 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CF65E067F0B15AE5BD53DCE0 /* Build configuration list for PBXProject "HabitTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -28,11 +28,17 @@ struct HabitTrackerApp: App {
             
             // Request notification permissions & schedule daily 5:00 AM reminder
             NotificationManager.shared.requestAuthorization()
+            
+            // Sync initial widget streak snapshot
+            if let habits = try? container.mainContext.fetch(FetchDescriptor<Habit>()) {
+                StreakWidgetSnapshotService.shared.saveSnapshot(from: habits)
+            }
         } catch {
             fatalError("Could not initialize SwiftData ModelContainer: \(error)")
         }
     }
     
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showSplash: Bool = true
     
     var body: some Scene {
@@ -50,6 +56,13 @@ struct HabitTrackerApp: App {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                     withAnimation(.easeOut(duration: 0.35)) {
                         showSplash = false
+                    }
+                }
+            }
+            .onChange(of: scenePhase) { _, newPhase in
+                if newPhase == .active || newPhase == .background {
+                    if let habits = try? container.mainContext.fetch(FetchDescriptor<Habit>()) {
+                        StreakWidgetSnapshotService.shared.saveSnapshot(from: habits)
                     }
                 }
             }

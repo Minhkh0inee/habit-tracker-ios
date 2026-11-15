@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 private enum StreakThreshold {
     static let buildingRange = 1...6
@@ -12,12 +13,12 @@ private enum StreakSymbol {
     static let filledFlame = "flame.fill"
 }
 
-public enum StreakStatus: Equatable {
-    case none
-    case building
-    case hot
-    case blazing
-    case legendary
+public enum StreakStatus: String, Codable, CaseIterable, Equatable {
+    case none = "none"
+    case building = "building"
+    case hot = "hot"
+    case blazing = "blazing"
+    case legendary = "legendary"
 
     public static func from(streak: Int) -> StreakStatus {
         switch streak {
@@ -34,12 +35,77 @@ public enum StreakStatus: Equatable {
         }
     }
 
+    public var title: String {
+        switch self {
+        case .none:
+            return "No Streak"
+        case .building:
+            return "Building"
+        case .hot:
+            return "Hot"
+        case .blazing:
+            return "Blazing"
+        case .legendary:
+            return "Legendary"
+        }
+    }
+
     public var flameSymbol: String {
         switch self {
         case .none:
             return StreakSymbol.emptyFlame
         default:
             return StreakSymbol.filledFlame
+        }
+    }
+
+    public var backgroundColor: Color {
+        switch self {
+        case .none:
+            return Color.gray
+        case .building:
+            return Color.yellow
+        case .hot:
+            return Color.orange
+        case .blazing:
+            return Color.red
+        case .legendary:
+            return Color.purple
+        }
+    }
+
+    public var flameGradient: LinearGradient {
+        switch self {
+        case .none:
+            return LinearGradient(
+                colors: [Color.gray.opacity(0.5), Color.gray.opacity(0.3)],
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        case .building:
+            return LinearGradient(
+                colors: [Color.yellow, Color.orange.opacity(0.7)],
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        case .hot:
+            return LinearGradient(
+                colors: [Color.orange, Color.red.opacity(0.7)],
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        case .blazing:
+            return LinearGradient(
+                colors: [Color.red, Color.orange.opacity(0.6)],
+                startPoint: .bottom,
+                endPoint: .top
+            )
+        case .legendary:
+            return LinearGradient(
+                colors: [Color.purple, Color.pink.opacity(0.7)],
+                startPoint: .bottom,
+                endPoint: .top
+            )
         }
     }
 }
@@ -205,29 +271,5 @@ public enum StreakEngine {
         }
 
         return longest
-    }
-}
-
-public extension Habit {
-    var completedSessionDates: [Date] {
-        sessions
-            .filter { $0.isCompleted }
-            .map { $0.date }
-    }
-
-    var streakInfo: StreakInfo {
-        StreakEngine.streakInfo(from: completedSessionDates)
-    }
-
-    var currentStreak: Int {
-        streakInfo.currentStreak
-    }
-
-    var longestStreak: Int {
-        streakInfo.longestStreak
-    }
-
-    var streakIsActiveToday: Bool {
-        streakInfo.isActiveToday
     }
 }

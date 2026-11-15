@@ -40,5 +40,10 @@ public struct MainTabView: View {
                 timerViewModel.syncWithForeground()
             }
         }
+        .onOpenURL { url in
+            if url.scheme == "habittracker" {
+                selectedTab = 0
+            }
+        }
     }
 }

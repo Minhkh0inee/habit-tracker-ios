@@ -252,9 +252,11 @@ public struct TodayHabitsView: View {
             }
             .onAppear {
                 NotificationManager.shared.syncAtRiskNotification(habits: habits)
+                StreakWidgetSnapshotService.shared.saveSnapshot(from: habits)
             }
             .onChange(of: completedCount) { _, _ in
                 NotificationManager.shared.syncAtRiskNotification(habits: habits)
+                StreakWidgetSnapshotService.shared.saveSnapshot(from: habits)
             }
         }
     }
@@ -315,6 +317,9 @@ public struct TodayHabitsView: View {
         }
         modelContext.delete(habit)
         try? modelContext.save()
+        if let remaining = try? modelContext.fetch(FetchDescriptor<Habit>()) {
+            StreakWidgetSnapshotService.shared.saveSnapshot(from: remaining)
+        }
     }
     
     private func triggerTestNotification() {

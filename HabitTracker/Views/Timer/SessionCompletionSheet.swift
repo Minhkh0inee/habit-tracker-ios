@@ -572,6 +572,10 @@ public struct SessionCompletionSheet: View {
         
         try? modelContext.save()
         
+        if let allHabits = try? modelContext.fetch(FetchDescriptor<Habit>()) {
+            StreakWidgetSnapshotService.shared.saveSnapshot(from: allHabits)
+        }
+        
         NotificationManager.shared.cancelAtRiskNotification()
         
         let generator = UINotificationFeedbackGenerator()

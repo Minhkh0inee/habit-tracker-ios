@@ -263,6 +263,7 @@ public struct SettingsSheet: View {
             }
             
             try modelContext.save()
+            StreakWidgetSnapshotService.shared.saveSnapshot(from: allHabits)
             dismiss()
         } catch {
             print("Failed to reset all data: \(error)")
