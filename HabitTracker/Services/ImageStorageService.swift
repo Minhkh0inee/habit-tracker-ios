@@ -55,18 +55,22 @@ public final class ImageStorageService {
     
     // MARK: - Helper Image Resizer
     private func resizeImageIfNeeded(_ image: UIImage, maxDimension: CGFloat) -> UIImage {
-        let size = image.size
-        let maxSide = max(size.width, size.height)
+        let pixelWidth = image.size.width * image.scale
+        let pixelHeight = image.size.height * image.scale
+        let maxSide = max(pixelWidth, pixelHeight)
         guard maxSide > maxDimension else { return image }
         
         let ratio = maxDimension / maxSide
-        let newSize = CGSize(width: size.width * ratio, height: size.height * ratio)
+        let targetPixelSize = CGSize(
+            width: floor(pixelWidth * ratio),
+            height: floor(pixelHeight * ratio)
+        )
         
         let format = UIGraphicsImageRendererFormat()
         format.scale = 1.0
-        let renderer = UIGraphicsImageRenderer(size: newSize, format: format)
+        let renderer = UIGraphicsImageRenderer(size: targetPixelSize, format: format)
         return renderer.image { _ in
-            image.draw(in: CGRect(origin: .zero, size: newSize))
+            image.draw(in: CGRect(origin: .zero, size: targetPixelSize))
         }
     }
 }
