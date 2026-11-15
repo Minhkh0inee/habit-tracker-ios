@@ -25,6 +25,7 @@ public struct TodayHabitsView: View {
     @State private var habitForDirectLog: Habit?
     @State private var habitForCurriculum: Habit?
     @State private var habitForEdit: Habit?
+    @State private var habitToDelete: Habit?
     
     public init(selectedTab: Binding<Int>, timerViewModel: TimerViewModel) {
         self._selectedTab = selectedTab
@@ -154,7 +155,7 @@ public struct TodayHabitsView: View {
                                     }
                                     
                                     Button(role: .destructive) {
-                                        deleteHabit(habit)
+                                        habitToDelete = habit
                                     } label: {
                                         Label("Delete Habit", systemImage: "trash")
                                     }
@@ -249,6 +250,24 @@ public struct TodayHabitsView: View {
             }
             .sheet(item: $habitForEdit) { habit in
                 EditHabitSheet(habit: habit)
+            }
+            .alert("Delete Habit?", isPresented: Binding(
+                get: { habitToDelete != nil },
+                set: { if !$0 { habitToDelete = nil } }
+            )) {
+                Button("Cancel", role: .cancel) {
+                    habitToDelete = nil
+                }
+                Button("Delete", role: .destructive) {
+                    if let habit = habitToDelete {
+                        deleteHabit(habit)
+                        habitToDelete = nil
+                    }
+                }
+            } message: {
+                if let habit = habitToDelete {
+                    Text("Are you sure you want to delete '\(habit.title)'? This will permanently remove all associated study logs and photos.")
+                }
             }
             .onAppear {
                 NotificationManager.shared.syncAtRiskNotification(habits: habits)

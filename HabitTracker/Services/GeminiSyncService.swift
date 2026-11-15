@@ -3,16 +3,37 @@ import Foundation
 public final class GeminiSyncService {
     public static let shared = GeminiSyncService()
     
-    private let apiKeyStorageKey = "GeminiAPIKey"
+    public var urlSession: URLSession = .shared
     
-    private init() {}
+    private let apiKeyKeychainKey = "com.habittracker.gemini_api_key"
+    private let legacyUserDefaultsKey = "GeminiAPIKey"
+    
+    public init(session: URLSession = .shared) {
+        self.urlSession = session
+        migrateLegacyApiKeyIfNeeded()
+    }
     
     public var storedApiKey: String {
         get {
-            UserDefaults.standard.string(forKey: apiKeyStorageKey) ?? ""
+            KeychainService.load(key: apiKeyKeychainKey) ?? ""
         }
         set {
-            UserDefaults.standard.set(newValue.trimmingCharacters(in: .whitespacesAndNewlines), forKey: apiKeyStorageKey)
+            let trimmed = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmed.isEmpty {
+                KeychainService.delete(key: apiKeyKeychainKey)
+            } else {
+                KeychainService.save(key: apiKeyKeychainKey, value: trimmed)
+            }
+        }
+    }
+    
+    private func migrateLegacyApiKeyIfNeeded() {
+        if let legacyKey = UserDefaults.standard.string(forKey: legacyUserDefaultsKey),
+           !legacyKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            if KeychainService.load(key: apiKeyKeychainKey) == nil {
+                KeychainService.save(key: apiKeyKeychainKey, value: legacyKey.trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            UserDefaults.standard.removeObject(forKey: legacyUserDefaultsKey)
         }
     }
     
@@ -123,7 +144,9 @@ public final class GeminiSyncService {
             throw SyncError.networkError("Could not serialize request: \(error.localizedDescription)")
         }
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        request.addValue(cleanKey, forHTTPHeaderField: "x-goog-api-key")
+        
+        let (data, response) = try await urlSession.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             let errorString = String(data: data, encoding: .utf8) ?? "HTTP \(httpResponse.statusCode)"
@@ -214,7 +237,9 @@ public final class GeminiSyncService {
         
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        request.addValue(cleanKey, forHTTPHeaderField: "x-goog-api-key")
+        
+        let (data, response) = try await urlSession.data(for: request)
         
         if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
             let errorString = String(data: data, encoding: .utf8) ?? "HTTP \(httpResponse.statusCode)"

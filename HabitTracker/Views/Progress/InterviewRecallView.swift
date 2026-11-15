@@ -11,16 +11,24 @@ public struct InterviewRecallView: View {
     @State private var currentIndex: Int = 0
     @State private var isNotesRevealed: Bool = false
     @State private var filterOnlyDue: Bool = true
+    @State private var sessionDeck: [LessonItem] = []
     
     public init() {}
     
-    private var dueLessons: [LessonItem] {
+    private var dueCount: Int {
         let now = Date()
-        return allLessons.filter { $0.nextReviewDate <= now && !$0.isMastered }
+        return allLessons.filter { $0.nextReviewDate <= now && !$0.isMastered }.count
     }
     
-    private var activeList: [LessonItem] {
-        filterOnlyDue ? dueLessons : allLessons
+    private func reloadDeck() {
+        let now = Date()
+        if filterOnlyDue {
+            sessionDeck = allLessons.filter { $0.nextReviewDate <= now && !$0.isMastered }
+        } else {
+            sessionDeck = allLessons
+        }
+        currentIndex = 0
+        isNotesRevealed = false
     }
     
     public var body: some View {
@@ -28,24 +36,27 @@ public struct InterviewRecallView: View {
             VStack(spacing: 20) {
                 // Header Segment Filter
                 Picker("Review Filter", selection: $filterOnlyDue) {
-                    Text("Due Today (\(dueLessons.count))").tag(true)
+                    Text("Due Today (\(dueCount))").tag(true)
                     Text("All Concepts (\(allLessons.count))").tag(false)
                 }
                 .pickerStyle(.segmented)
                 .padding(.horizontal)
                 .padding(.top, 8)
+                .onChange(of: filterOnlyDue) { _, _ in
+                    reloadDeck()
+                }
                 
-                if activeList.isEmpty {
+                if sessionDeck.isEmpty {
                     emptyStateView
                         .padding(.horizontal)
                     Spacer()
-                } else if currentIndex < activeList.count {
-                    let currentItem = activeList[currentIndex]
+                } else if currentIndex < sessionDeck.count {
+                    let currentItem = sessionDeck[currentIndex]
                     
                     VStack(spacing: 16) {
                         // Progress Counter
                         HStack {
-                            Text("Card \(currentIndex + 1) of \(activeList.count)")
+                            Text("Card \(currentIndex + 1) of \(sessionDeck.count)")
                                 .font(.system(.caption, design: .rounded, weight: .bold))
                                 .foregroundColor(AppTheme.textSecondary)
                             Spacer()
@@ -90,6 +101,9 @@ public struct InterviewRecallView: View {
             .background(AppTheme.background.ignoresSafeArea())
             .navigationTitle("Interview Recall")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                reloadDeck()
+            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Done") {

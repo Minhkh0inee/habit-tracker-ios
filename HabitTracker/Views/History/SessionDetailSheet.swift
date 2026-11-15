@@ -6,6 +6,7 @@ public struct SessionDetailSheet: View {
     @Environment(\.modelContext) private var modelContext
     
     public let session: HabitSession
+    @State private var showDeleteConfirmation: Bool = false
     
     public init(session: HabitSession) {
         self.session = session
@@ -164,7 +165,7 @@ public struct SessionDetailSheet: View {
                     }
                     
                     // Delete Button
-                    Button(role: .destructive, action: deleteSession) {
+                    Button(role: .destructive, action: { showDeleteConfirmation = true }) {
                         HStack {
                             Image(systemName: "trash")
                             Text("Delete Log Entry")
@@ -190,6 +191,14 @@ public struct SessionDetailSheet: View {
                     .foregroundColor(AppTheme.textPrimary)
                 }
             }
+            .alert("Delete Log Entry?", isPresented: $showDeleteConfirmation) {
+                Button("Cancel", role: .cancel) {}
+                Button("Delete", role: .destructive) {
+                    deleteSession()
+                }
+            } message: {
+                Text("Are you sure you want to delete this session? This action cannot be undone and will permanently remove associated proof photos.")
+            }
         }
     }
     
@@ -199,6 +208,12 @@ public struct SessionDetailSheet: View {
         }
         modelContext.delete(session)
         try? modelContext.save()
+        
+        if let habits = try? modelContext.fetch(FetchDescriptor<Habit>()) {
+            StreakWidgetSnapshotService.shared.saveSnapshot(from: habits)
+            NotificationManager.shared.syncAtRiskNotification(habits: habits)
+        }
+        
         dismiss()
     }
     

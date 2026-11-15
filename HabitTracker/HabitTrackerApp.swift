@@ -17,9 +17,6 @@ struct HabitTrackerApp: App {
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
             container = try ModelContainer(for: schema, configurations: [modelConfiguration])
             
-            // Clean any leftover test sessions from November 1st
-            cleanTestDataIfNeeded(context: container.mainContext)
-            
             // Seed clean default habits if database is completely empty
             seedInitialHabitsIfNeeded(context: container.mainContext)
             
@@ -68,36 +65,6 @@ struct HabitTrackerApp: App {
             }
         }
         .modelContainer(container)
-    }
-    
-    /// Wipes all test session records and test proof images to ensure a fresh, clean slate
-    private func cleanTestDataIfNeeded(context: ModelContext) {
-        let defaults = UserDefaults.standard
-        if !defaults.bool(forKey: "hasCleanedTestData_v1") {
-            do {
-                let sessionDescriptor = FetchDescriptor<HabitSession>()
-                let allSessions = try context.fetch(sessionDescriptor)
-                for session in allSessions {
-                    if let photoName = session.photoFileName {
-                        ImageStorageService.shared.deleteProofImage(named: photoName)
-                    }
-                    context.delete(session)
-                }
-                
-                // Clear any sessions from habit relationship arrays
-                let habitDescriptor = FetchDescriptor<Habit>()
-                let allHabits = try context.fetch(habitDescriptor)
-                for habit in allHabits {
-                    habit.sessions.removeAll()
-                }
-                
-                try context.save()
-                defaults.set(true, forKey: "hasCleanedTestData_v1")
-                print("All test data from November 1st cleared successfully.")
-            } catch {
-                print("Error clearing test sessions: \(error)")
-            }
-        }
     }
     
     /// Seeds the initial clean template habits if none exist (with 0 completed sessions)

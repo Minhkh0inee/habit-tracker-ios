@@ -64,10 +64,23 @@ public final class Habit {
             .sorted { ($0.completedDate ?? Date.distantPast) > ($1.completedDate ?? Date.distantPast) }
     }
     
+    public var completedCurriculumToday: [CurriculumConcept] {
+        let calendar = Calendar.current
+        return curriculumQueue.filter { concept in
+            concept.isCompleted && concept.completedDate != nil && calendar.isDateInToday(concept.completedDate!)
+        }.sorted { ($0.completedDate ?? .distantPast) < ($1.completedDate ?? .distantPast) }
+    }
+    
     /// Selects the concepts fitting today's target time, with automatic rollover for past-due uncompleted items
     public var todayScheduledConcepts: [CurriculumConcept] {
         let uncompleted = uncompletedCurriculum
         guard !uncompleted.isEmpty else { return [] }
+        
+        let completedMinutesToday = completedCurriculumToday.reduce(0) { $0 + $1.estimatedMinutes }
+        let remainingTargetMinutes = max(0, targetMinutes - completedMinutesToday)
+        
+        // If daily target minutes are already met by completed concepts today, no extra uncompleted concepts are needed
+        guard remainingTargetMinutes > 0 else { return [] }
         
         var selected: [CurriculumConcept] = []
         var accumulatedMinutes = 0
@@ -75,13 +88,17 @@ public final class Habit {
         for concept in uncompleted {
             selected.append(concept)
             accumulatedMinutes += concept.estimatedMinutes
-            // Stop once we meet or exceed the habit's target minutes (or at least 1-2 items)
-            if accumulatedMinutes >= targetMinutes {
+            // Stop once we meet or exceed the habit's remaining target minutes
+            if accumulatedMinutes >= remainingTargetMinutes {
                 break
             }
         }
         
         return selected
+    }
+    
+    public var todayAllGoals: [CurriculumConcept] {
+        completedCurriculumToday + todayScheduledConcepts
     }
     
     public var todayScheduledMinutes: Int {

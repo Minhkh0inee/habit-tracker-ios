@@ -364,13 +364,22 @@ public struct HabitCurriculumSheet: View {
             if concept.isCompleted {
                 concept.completedDate = Date()
                 
-                let lessonItem = LessonItem(
-                    title: concept.title,
-                    notes: concept.conceptDescription,
-                    category: habit.category,
-                    habit: habit
+                let targetTitle = concept.title
+                let existingDescriptor = FetchDescriptor<LessonItem>(
+                    predicate: #Predicate<LessonItem> { item in
+                        item.title == targetTitle
+                    }
                 )
-                modelContext.insert(lessonItem)
+                let existing = (try? modelContext.fetch(existingDescriptor)) ?? []
+                if existing.isEmpty {
+                    let lessonItem = LessonItem(
+                        title: concept.title,
+                        notes: concept.conceptDescription,
+                        category: habit.category,
+                        habit: habit
+                    )
+                    modelContext.insert(lessonItem)
+                }
             } else {
                 concept.completedDate = nil
             }

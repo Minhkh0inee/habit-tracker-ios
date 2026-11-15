@@ -262,6 +262,23 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
         }
     }
     
+    public func scheduleTimerCompletionNotification(title: String, durationSeconds: TimeInterval) {
+        cancelTimerCompletionNotification()
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Focus Session Finished! 🎯"
+        content.body = "Great work! '\(title)' session is complete. Tap to log your key takeaways and proof."
+        content.sound = .default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, durationSeconds), repeats: false)
+        let request = UNNotificationRequest(identifier: "FocusTimerCompletion", content: content, trigger: trigger)
+        notificationCenter.add(request)
+    }
+    
+    public func cancelTimerCompletionNotification() {
+        notificationCenter.removePendingNotificationRequests(withIdentifiers: ["FocusTimerCompletion"])
+    }
+    
     public func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,

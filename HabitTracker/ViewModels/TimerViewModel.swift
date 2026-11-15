@@ -71,6 +71,10 @@ public final class TimerViewModel {
         targetDate = Date().addingTimeInterval(Double(remainingSeconds))
         state = .running
         triggerHaptic(.medium)
+        NotificationManager.shared.scheduleTimerCompletionNotification(
+            title: selectedHabit?.title ?? "Focus",
+            durationSeconds: Double(remainingSeconds)
+        )
         
         startTimerSubscription()
     }
@@ -80,6 +84,7 @@ public final class TimerViewModel {
         updateRemainingFromTarget()
         targetDate = nil
         timerCancellable?.cancel()
+        NotificationManager.shared.cancelTimerCompletionNotification()
         state = .paused
         triggerHaptic(.light)
     }
@@ -91,6 +96,7 @@ public final class TimerViewModel {
     public func reset() {
         timerCancellable?.cancel()
         targetDate = nil
+        NotificationManager.shared.cancelTimerCompletionNotification()
         remainingSeconds = selectedDurationMinutes * 60
         totalSeconds = remainingSeconds
         state = .idle
@@ -100,6 +106,7 @@ public final class TimerViewModel {
     public func finishEarly() {
         timerCancellable?.cancel()
         targetDate = nil
+        NotificationManager.shared.cancelTimerCompletionNotification()
         state = .completed
         triggerHaptic(.heavy)
         showCompletionSheet = true
@@ -108,6 +115,7 @@ public final class TimerViewModel {
     public func onTimeout() {
         timerCancellable?.cancel()
         targetDate = nil
+        NotificationManager.shared.cancelTimerCompletionNotification()
         remainingSeconds = 0
         state = .completed
         triggerHaptic(.heavy)
