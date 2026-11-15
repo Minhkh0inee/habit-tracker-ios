@@ -1,14 +1,14 @@
 import Foundation
 import UserNotifications
 
-private enum NotificationDefaults {
-    static let morningReminderHour: Int = 5
-    static let morningReminderMinute: Int = 0
-    static let eveningReminderHour: Int = 20
-    static let eveningReminderMinute: Int = 0
-    static let lateEveningGraceSeconds: TimeInterval = 15 * 60
-    static let defaultTestDelaySeconds: Double = 2.0
-    static let defaultTestStreak: Int = 3
+public enum NotificationDefaults {
+    public static let morningReminderHour: Int = 5
+    public static let morningReminderMinute: Int = 0
+    public static let eveningReminderHour: Int = 20
+    public static let eveningReminderMinute: Int = 0
+    public static let lateEveningGraceSeconds: TimeInterval = 15 * 60
+    public static let defaultTestDelaySeconds: Double = 2.0
+    public static let defaultTestStreak: Int = 3
 }
 
 private enum NotificationIdentifier {
