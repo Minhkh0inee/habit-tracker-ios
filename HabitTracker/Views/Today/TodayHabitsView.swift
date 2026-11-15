@@ -318,6 +318,7 @@ public struct TodayHabitsView: View {
         modelContext.delete(habit)
         try? modelContext.save()
         if let remaining = try? modelContext.fetch(FetchDescriptor<Habit>()) {
+            NotificationManager.shared.syncAtRiskNotification(habits: remaining)
             StreakWidgetSnapshotService.shared.saveSnapshot(from: remaining)
         }
     }

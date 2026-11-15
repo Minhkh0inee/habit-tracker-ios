@@ -574,9 +574,10 @@ public struct SessionCompletionSheet: View {
         
         if let allHabits = try? modelContext.fetch(FetchDescriptor<Habit>()) {
             StreakWidgetSnapshotService.shared.saveSnapshot(from: allHabits)
+            NotificationManager.shared.syncAtRiskNotification(habits: allHabits)
+        } else {
+            NotificationManager.shared.cancelAtRiskNotification()
         }
-        
-        NotificationManager.shared.cancelAtRiskNotification()
         
         let generator = UINotificationFeedbackGenerator()
         generator.notificationOccurred(.success)
