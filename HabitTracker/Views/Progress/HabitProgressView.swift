@@ -12,6 +12,7 @@ public struct HabitProgressView: View {
     @State private var timeRangeDays: Int = 7
     @State private var expandedHabitIds: Set<UUID> = []
     @State private var showingRecallSheet: Bool = false
+    @State private var habitForCurriculum: Habit?
     
     public init() {}
     
@@ -103,6 +104,9 @@ public struct HabitProgressView: View {
             }
             .fullScreenCover(isPresented: $showingRecallSheet) {
                 InterviewRecallView()
+            }
+            .fullScreenCover(item: $habitForCurriculum) { habit in
+                HabitCurriculumSheet(habit: habit)
             }
         }
     }
@@ -258,58 +262,55 @@ public struct HabitProgressView: View {
         }
     }
     
-    // MARK: - Individual Habit Process Card (with Expandable Session Checklist)
+    // MARK: - Individual Habit Process Card (Clicking opens Full Syllabus Roadmap)
     private func habitProcessCard(_ habit: Habit) -> some View {
-        let isExpanded = expandedHabitIds.contains(habit.id)
         let habitSessions = sessions.filter { $0.habit?.id == habit.id }
         let totalMinutes = habitSessions.reduce(0) { $0 + $1.durationMinutes }
         let totalHours = Double(totalMinutes) / 60.0
         
-        // Tier Milestones: 5h, 15h, 30h, 50h, 100h
-        let milestoneTargetHours: Double = totalHours < 5 ? 5 :
-                                          totalHours < 15 ? 15 :
-                                          totalHours < 30 ? 30 :
-                                          totalHours < 50 ? 50 : 100
-        let progressPercent = min(totalHours / milestoneTargetHours, 1.0)
+        let completedConcepts = habit.completedCurriculum.count
+        let totalConcepts = habit.curriculumQueue.count
+        let roadmapProgress = totalConcepts > 0 ? Double(completedConcepts) / Double(totalConcepts) : 0.0
         
-        return VStack(spacing: 0) {
-            // Header: Habit Overview
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.22)) {
-                    if isExpanded {
-                        expandedHabitIds.remove(habit.id)
-                    } else {
-                        expandedHabitIds.insert(habit.id)
-                    }
-                }
-            }) {
-                VStack(spacing: 12) {
-                    HStack(spacing: 12) {
-                        Image(systemName: habit.iconName)
-                            .font(.system(size: 18))
+        return Button(action: {
+            habitForCurriculum = habit
+        }) {
+            VStack(spacing: 12) {
+                HStack(spacing: 12) {
+                    Image(systemName: habit.iconName)
+                        .font(.system(size: 18))
+                        .foregroundColor(AppTheme.textPrimary)
+                        .frame(width: 40, height: 40)
+                        .background(AppTheme.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                .stroke(AppTheme.border, lineWidth: 1)
+                        )
+                    
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(habit.category.uppercased())
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                            .foregroundColor(AppTheme.textSecondary)
+                        
+                        Text(habit.title)
+                            .font(.system(.subheadline, design: .rounded, weight: .semibold))
                             .foregroundColor(AppTheme.textPrimary)
-                            .frame(width: 40, height: 40)
-                            .background(AppTheme.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .stroke(AppTheme.border, lineWidth: 1)
-                            )
-                        
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(habit.category.uppercased())
-                                .font(.system(size: 9, weight: .bold, design: .rounded))
-                                .foregroundColor(AppTheme.textSecondary)
-                            
-                            Text(habit.title)
-                                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                            .lineLimit(1)
+                    }
+                    
+                    Spacer()
+                    
+                    VStack(alignment: .trailing, spacing: 2) {
+                        if totalConcepts > 0 {
+                            Text("\(completedConcepts)/\(totalConcepts) Mastered")
+                                .font(.system(.subheadline, design: .monospaced, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
-                                .lineLimit(1)
-                        }
-                        
-                        Spacer()
-                        
-                        VStack(alignment: .trailing, spacing: 2) {
+                            
+                            Text(String(format: "%.1fh logged", totalHours))
+                                .font(.system(size: 11, design: .rounded))
+                                .foregroundColor(AppTheme.textSecondary)
+                        } else {
                             Text(String(format: "%.1fh", totalHours))
                                 .font(.system(.subheadline, design: .monospaced, weight: .bold))
                                 .foregroundColor(AppTheme.textPrimary)
@@ -318,98 +319,43 @@ public struct HabitProgressView: View {
                                 .font(.system(size: 11, design: .rounded))
                                 .foregroundColor(AppTheme.textSecondary)
                         }
-                        
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 12, weight: .semibold))
-                            .foregroundColor(AppTheme.textSecondary)
-                            .rotationEffect(.degrees(isExpanded ? 90 : 0))
-                            .padding(.leading, 4)
                     }
                     
-                    // Milestone Progress Bar
-                    VStack(alignment: .leading, spacing: 4) {
-                        HStack {
-                            Text("Goal: \(Int(milestoneTargetHours))h Milestone")
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundColor(AppTheme.textSecondary)
+                        .padding(.leading, 4)
+                }
+                
+                // Roadmap Progress Bar
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack {
+                        if totalConcepts > 0 {
+                            Text("Syllabus Roadmap: \(completedConcepts) of \(totalConcepts) Mastered")
                                 .font(.system(size: 10, weight: .medium, design: .rounded))
                                 .foregroundColor(AppTheme.textSecondary)
                             Spacer()
-                            Text("\(Int(progressPercent * 100))%")
+                            Text("\(Int(roadmapProgress * 100))%")
+                                .font(.system(size: 10, weight: .bold, design: .monospaced))
+                                .foregroundColor(AppTheme.textPrimary)
+                        } else {
+                            Text("\(habitSessions.count) Sessions Completed")
+                                .font(.system(size: 10, weight: .medium, design: .rounded))
+                                .foregroundColor(AppTheme.textSecondary)
+                            Spacer()
+                            Text(String(format: "%.1fh Total", totalHours))
                                 .font(.system(size: 10, weight: .bold, design: .monospaced))
                                 .foregroundColor(AppTheme.textPrimary)
                         }
-                        
-                        MinimalProgressBar(progress: progressPercent, height: 6)
                     }
-                }
-                .padding(14)
-            }
-            .buttonStyle(.plain)
-            
-            // Expandable Checklist of Completed Sessions for this Habit
-            if isExpanded {
-                VStack(alignment: .leading, spacing: 10) {
-                    Divider()
-                        .background(AppTheme.border)
-                        .padding(.horizontal, 14)
                     
-                    Text("COMPLETED SESSIONS CHECKLIST")
-                        .font(.system(size: 10, weight: .bold, design: .rounded))
-                        .foregroundColor(AppTheme.textSecondary)
-                        .padding(.horizontal, 14)
-                        .padding(.top, 4)
-                    
-                    if habitSessions.isEmpty {
-                        Text("No sessions completed yet for this habit.")
-                            .font(.system(.footnote, design: .rounded))
-                            .foregroundColor(AppTheme.textSecondary)
-                            .padding(.horizontal, 14)
-                            .padding(.bottom, 8)
-                    } else {
-                        VStack(spacing: 8) {
-                            ForEach(habitSessions) { session in
-                                HStack(spacing: 10) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .font(.system(size: 14))
-                                        .foregroundColor(Color.green)
-                                    
-                                    VStack(alignment: .leading, spacing: 2) {
-                                        let titleText = !session.lessonTitle.isEmpty ? session.lessonTitle : formattedDate(session.date)
-                                        Text(titleText)
-                                            .font(.system(.caption, design: .rounded, weight: .semibold))
-                                            .foregroundColor(AppTheme.textPrimary)
-                                        
-                                        let noteSnippet = !session.lessonNotes.isEmpty ? session.lessonNotes : session.notes
-                                        if !noteSnippet.isEmpty {
-                                            Text(noteSnippet)
-                                                .font(.system(size: 11, design: .rounded))
-                                                .foregroundColor(AppTheme.textSecondary)
-                                                .lineLimit(1)
-                                        }
-                                    }
-                                    
-                                    Spacer()
-                                    
-                                    Text("\(session.durationMinutes)m")
-                                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                                        .foregroundColor(AppTheme.textPrimary)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 2)
-                                        .background(AppTheme.surface)
-                                        .clipShape(Capsule())
-                                }
-                                .padding(10)
-                                .background(AppTheme.surface.opacity(0.5))
-                                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                            }
-                        }
-                        .padding(.horizontal, 14)
-                        .padding(.bottom, 14)
-                    }
+                    MinimalProgressBar(progress: totalConcepts > 0 ? roadmapProgress : 1.0, height: 6)
                 }
-                .transition(.opacity.combined(with: .move(edge: .top)))
             }
+            .padding(14)
+            .bentoCard()
         }
-        .bentoCard()
+        .buttonStyle(.plain)
     }
     
     private func formattedDate(_ date: Date) -> String {

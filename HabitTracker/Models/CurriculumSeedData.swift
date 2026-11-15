@@ -170,62 +170,77 @@ public enum CurriculumSeedData {
         )
     ]
     
-    // MARK: - System Design Curriculum
+    // MARK: - System Design Curriculum (System-Design-Primer by Donne Martin)
     public static let systemDesignConcepts: [SeedConcept] = [
         SeedConcept(
-            title: "Client-Server Architecture: HTTP/1.1 vs HTTP/2 vs gRPC",
-            description: "Head-of-line blocking, multiplexing, binary protocols, protobuf serialization, and bi-directional streaming.",
+            title: "Performance vs Scalability & Latency vs Throughput",
+            description: "Vertical vs horizontal scaling, service latency vs throughput trade-offs, and SLAs/SLOs in large systems.",
             estimatedMinutes: 25
         ),
         SeedConcept(
-            title: "Load Balancing: L4 vs L7 & Consistent Hashing",
-            description: "Transport vs Application layer proxying, virtual nodes on hash rings, and rebalancing node churn.",
+            title: "Availability vs Consistency & The CAP Theorem",
+            description: "CP vs AP systems, consistency patterns (weak, eventual, strong), and availability fail-over patterns.",
             estimatedMinutes: 30
         ),
         SeedConcept(
-            title: "Caching Strategies: Cache-Aside, Write-Through & Write-Behind",
-            description: "Redis and Memcached patterns, cache invalidation, thundering herd protection, and dogpiling mitigation.",
+            title: "DNS & Content Delivery Networks (CDNs: Push vs Pull)",
+            description: "Anycast routing, TTL tuning, CDN edge caching, and push vs pull caching architecture.",
+            estimatedMinutes: 25
+        ),
+        SeedConcept(
+            title: "Load Balancers (L4 vs L7) & Reverse Proxies",
+            description: "Transport vs Application layer proxying, consistent hashing with virtual nodes, and reverse proxy benefits.",
             estimatedMinutes: 30
         ),
         SeedConcept(
-            title: "Relational vs NoSQL: ACID vs BASE Tradeoffs",
-            description: "B-Tree vs LSM-Tree storage engines, normalization vs denormalization, and eventual consistency.",
-            estimatedMinutes: 35
-        ),
-        SeedConcept(
-            title: "Database Sharding, Partitioning & Replication",
-            description: "Horizontal vs vertical partitioning, range-based vs hash sharding, read replicas, and split-brain resolution.",
-            estimatedMinutes: 35
-        ),
-        SeedConcept(
-            title: "Message Brokers: Kafka vs RabbitMQ Architecture",
-            description: "Log-centric partitioning, consumer groups, offset tracking, push vs pull semantics, and dead-letter queues.",
-            estimatedMinutes: 35
-        ),
-        SeedConcept(
-            title: "Distributed Rate Limiting: Token Bucket & Sliding Window",
-            description: "Leaky bucket, token bucket in Redis with Lua scripts, sliding window logs vs sliding window counters.",
+            title: "Caching Architecture & Eviction Policies",
+            description: "Cache-aside, write-through, write-behind, and eviction algorithms (LRU, LFU) across client, web, and DB tiers.",
             estimatedMinutes: 30
         ),
         SeedConcept(
-            title: "Distributed Transactions: 2-Phase Commit vs Saga Pattern",
-            description: "Why 2PC fails in modern microservices, choreography vs orchestration sagas, and compensating actions.",
+            title: "Relational Databases: Master-Slave, Federation & Sharding",
+            description: "RDBMS scaling, master-slave replication, federation, horizontal sharding, denormalization, and B-Tree indexing.",
+            estimatedMinutes: 35
+        ),
+        SeedConcept(
+            title: "NoSQL: Key-Value, Document, Wide-Column & Graph Databases",
+            description: "When to choose NoSQL, BASE vs ACID properties, and trade-offs between Redis, MongoDB, Cassandra, and Neo4j.",
+            estimatedMinutes: 35
+        ),
+        SeedConcept(
+            title: "Asynchronous Processing: Message Queues & Pub-Sub",
+            description: "Decoupling services, backpressure handling, task queues, and pub-sub architectures (RabbitMQ vs Kafka).",
+            estimatedMinutes: 30
+        ),
+        SeedConcept(
+            title: "Communication Protocols: TCP/UDP, HTTP, WebSockets & RPC",
+            description: "Protocol trade-offs, HTTP/2 multiplexing, real-time bidirectional WebSockets, and high-performance gRPC/Protobuf.",
+            estimatedMinutes: 30
+        ),
+        SeedConcept(
+            title: "The 4-Step System Design Interview Framework & Estimations",
+            description: "Scope clarification, back-of-the-envelope math (QPS, storage, bandwidth), high-level diagram, and bottleneck drill-down.",
+            estimatedMinutes: 35
+        ),
+        SeedConcept(
+            title: "Case Study: Design a URL Shortener (TinyURL / Pastebin)",
+            description: "Base62 hashing, unique ID generation (Snowflake), database schema, caching hot keys, and high read concurrency.",
             estimatedMinutes: 40
         ),
         SeedConcept(
-            title: "Design TinyURL (URL Shortener) End-to-End",
-            description: "Base62 encoding, unique ID generation (Snowflake), database schema, and high-read cache tiering.",
+            title: "Case Study: Design Twitter Feed (Fanout-on-Write vs Read)",
+            description: "User timeline vs home timeline generation, fanout service optimization, Redis list caching, and handling celebrity users.",
             estimatedMinutes: 40
         ),
         SeedConcept(
-            title: "Design a Scalable Notification System",
-            description: "Priority queues for SMS/Email/Push, APNs/FCM workers, user notification settings, and deduplication.",
+            title: "Case Study: Design a Distributed Web Crawler",
+            description: "URL frontier priority queues, DNS caching, duplicate content detection (SimHash), robots.txt, and worker scaling.",
             estimatedMinutes: 40
         ),
         SeedConcept(
-            title: "Design a Distributed Key-Value Store (DynamoDB Style)",
-            description: "Gossip protocol, vector clocks for conflict resolution, quorum reads/writes (N, R, W), and hinted handoff.",
-            estimatedMinutes: 45
+            title: "Object-Oriented Design (OOD): SOLID Principles & Clean Patterns",
+            description: "Single Responsibility, Open-Closed, Liskov, Interface Segregation, Dependency Inversion, Factory, and Strategy patterns.",
+            estimatedMinutes: 30
         )
     ]
     

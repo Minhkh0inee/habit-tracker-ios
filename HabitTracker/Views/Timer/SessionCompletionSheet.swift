@@ -460,7 +460,7 @@ public struct SessionCompletionSheet: View {
     private func removeConceptItem(at index: Int) {
         guard conceptItems.count > 1, index < conceptItems.count else { return }
         withAnimation(.easeInOut(duration: 0.2)) {
-            conceptItems.remove(at: index)
+            _ = conceptItems.remove(at: index)
         }
     }
     

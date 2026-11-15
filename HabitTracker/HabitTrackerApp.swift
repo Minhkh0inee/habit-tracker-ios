@@ -126,6 +126,18 @@ struct HabitTrackerApp: App {
                     habit.curriculumQueue.removeAll()
                 }
                 
+                // Auto-update: If System Design habit has the legacy curriculum, upgrade it to the System-Design-Primer roadmap
+                let isSystemDesignHabit = habit.title.lowercased().contains("system design")
+                let hasLegacySDCurriculum = isSystemDesignHabit && habit.curriculumQueue.contains(where: {
+                    $0.title.contains("Distributed Transactions: 2-Phase Commit") || $0.title.contains("DynamoDB Style")
+                })
+                if hasLegacySDCurriculum {
+                    for oldConcept in habit.curriculumQueue {
+                        context.delete(oldConcept)
+                    }
+                    habit.curriculumQueue.removeAll()
+                }
+                
                 if habit.curriculumQueue.isEmpty {
                     let seedList = CurriculumSeedData.defaultConcepts(for: habit.title)
                     for (index, seed) in seedList.enumerated() {

@@ -43,20 +43,35 @@ public enum AppTheme {
     public static var buttonBackground: Color {
         Color.primary
     }
+    
+    // Status colors
+    public static var success: Color {
+        Color.green
+    }
+    
+    public static var successBackground: Color {
+        Color.green
+    }
+    
+    public static var successBorder: Color {
+        Color.green
+    }
 }
 
 // MARK: - View Modifiers
 public struct CardModifier: ViewModifier {
     var cornerRadius: CGFloat = 16
     var bordered: Bool = true
+    var backgroundColor: Color = AppTheme.cardBackground
+    var borderColor: Color = AppTheme.border
     
     public func body(content: Content) -> some View {
         content
-            .background(AppTheme.cardBackground)
+            .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .stroke(AppTheme.border, lineWidth: bordered ? 1 : 0)
+                    .stroke(borderColor, lineWidth: bordered ? 1 : 0)
             )
     }
 }
@@ -96,8 +111,18 @@ public struct SecondaryButtonModifier: ViewModifier {
 }
 
 public extension View {
-    func bentoCard(cornerRadius: CGFloat = 16, bordered: Bool = true) -> some View {
-        modifier(CardModifier(cornerRadius: cornerRadius, bordered: bordered))
+    func bentoCard(
+        cornerRadius: CGFloat = 16,
+        bordered: Bool = true,
+        backgroundColor: Color = AppTheme.cardBackground,
+        borderColor: Color = AppTheme.border
+    ) -> some View {
+        modifier(CardModifier(
+            cornerRadius: cornerRadius,
+            bordered: bordered,
+            backgroundColor: backgroundColor,
+            borderColor: borderColor
+        ))
     }
     
     func primaryButton(fullWidth: Bool = true) -> some View {

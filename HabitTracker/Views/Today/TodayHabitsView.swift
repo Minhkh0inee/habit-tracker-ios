@@ -119,17 +119,17 @@ public struct TodayHabitsView: View {
                                         timerViewModel.start()
                                         selectedTab = 1 // Switch to Focus Timer tab
                                     },
-                                    onDirectLog: { targetHabit in
-                                        habitForDirectLog = targetHabit
-                                    },
                                     onOpenCurriculum: { targetHabit in
                                         habitForCurriculum = targetHabit
-                                    },
-                                    onEditHabit: { targetHabit in
-                                        habitForEdit = targetHabit
                                     }
                                 )
                                 .contextMenu {
+                                    Button {
+                                        habitForDirectLog = habit
+                                    } label: {
+                                        Label("Log Photo Proof", systemImage: "camera")
+                                    }
+                                    
                                     Button {
                                         habitForEdit = habit
                                     } label: {
@@ -139,7 +139,7 @@ public struct TodayHabitsView: View {
                                     Button {
                                         habitForCurriculum = habit
                                     } label: {
-                                        Label("View Syllabus Roadmap", systemImage: "book.pages")
+                                        Label("View Today's Goals", systemImage: "target")
                                     }
                                     
                                     Button(role: .destructive) {
@@ -226,10 +226,11 @@ public struct TodayHabitsView: View {
                 )
             }
             .fullScreenCover(item: $habitForCurriculum) { habit in
-                HabitCurriculumSheet(
+                TodayGoalsSheet(
                     habit: habit,
                     onStartTimerWithConcept: { targetHabit, concept in
                         timerViewModel.selectHabit(targetHabit)
+                        timerViewModel.setDuration(minutes: concept.estimatedMinutes)
                         timerViewModel.start()
                         selectedTab = 1
                     }

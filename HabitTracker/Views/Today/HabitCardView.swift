@@ -3,16 +3,16 @@ import SwiftUI
 public struct HabitCardView: View {
     public let habit: Habit
     public let onStartTimer: (Habit) -> Void
-    public let onDirectLog: (Habit) -> Void
-    public let onOpenCurriculum: (Habit) -> Void
-    public let onEditHabit: (Habit) -> Void
+    public let onDirectLog: ((Habit) -> Void)?
+    public let onOpenCurriculum: ((Habit) -> Void)?
+    public let onEditHabit: ((Habit) -> Void)?
     
     public init(
         habit: Habit,
         onStartTimer: @escaping (Habit) -> Void,
-        onDirectLog: @escaping (Habit) -> Void,
-        onOpenCurriculum: @escaping (Habit) -> Void,
-        onEditHabit: @escaping (Habit) -> Void
+        onDirectLog: ((Habit) -> Void)? = nil,
+        onOpenCurriculum: ((Habit) -> Void)? = nil,
+        onEditHabit: ((Habit) -> Void)? = nil
     ) {
         self.habit = habit
         self.onStartTimer = onStartTimer
@@ -28,31 +28,31 @@ public struct HabitCardView: View {
                 // Habit Icon
                 Image(systemName: habit.iconName)
                     .font(.system(size: 20))
-                    .foregroundColor(AppTheme.textPrimary)
+                    .foregroundColor(habit.isCompletedToday ? .white : AppTheme.textPrimary)
                     .frame(width: 44, height: 44)
-                    .background(AppTheme.surface)
+                    .background(habit.isCompletedToday ? Color.white.opacity(0.2) : AppTheme.surface)
                     .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     .overlay(
                         RoundedRectangle(cornerRadius: 12, style: .continuous)
-                            .stroke(AppTheme.border, lineWidth: 1)
+                            .stroke(habit.isCompletedToday ? Color.white.opacity(0.3) : AppTheme.border, lineWidth: 1)
                     )
                 
                 // Habit Details
                 VStack(alignment: .leading, spacing: 3) {
                     Text(habit.category.uppercased())
                         .font(.system(size: 10, weight: .bold, design: .rounded))
-                        .foregroundColor(AppTheme.textSecondary)
+                        .foregroundColor(habit.isCompletedToday ? .white.opacity(0.85) : AppTheme.textSecondary)
                     
                     Text(habit.title)
                         .font(.system(.subheadline, design: .rounded, weight: .semibold))
-                        .foregroundColor(AppTheme.textPrimary)
+                        .foregroundColor(habit.isCompletedToday ? .white : AppTheme.textPrimary)
                         .lineLimit(1)
                     
                     HStack(spacing: 6) {
                         if habit.isCompletedToday {
                             Text("\(habit.totalMinutesToday)m logged")
                                 .font(.system(.caption, design: .rounded, weight: .medium))
-                                .foregroundColor(AppTheme.textPrimary)
+                                .foregroundColor(.white)
                         } else {
                             Text("Target: \(habit.targetMinutes)m")
                                 .font(.system(.caption, design: .rounded))
@@ -76,45 +76,31 @@ public struct HabitCardView: View {
                                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 8, style: .continuous)
-                                        .stroke(AppTheme.border, lineWidth: 1)
-                                    )
+                                        .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                                )
                         }
                         
                         Image(systemName: "checkmark.circle.fill")
                             .font(.system(size: 24))
-                            .foregroundColor(AppTheme.textPrimary)
+                            .foregroundColor(.white)
                     }
                 } else {
-                    HStack(spacing: 6) {
-                        Button(action: { onDirectLog(habit) }) {
-                            Image(systemName: "camera")
-                                .font(.system(size: 14, weight: .medium))
-                                .foregroundColor(AppTheme.textPrimary)
-                                .frame(width: 34, height: 34)
-                                .background(AppTheme.surface)
-                                .clipShape(Circle())
-                                .overlay(
-                                    Circle().stroke(AppTheme.border, lineWidth: 1)
-                                )
-                        }
-                        .buttonStyle(.plain)
-                        
-                        Button(action: { onStartTimer(habit) }) {
-                            Image(systemName: "play.fill")
-                                .font(.system(size: 13, weight: .semibold))
-                                .foregroundColor(AppTheme.buttonForeground)
-                                .frame(width: 34, height: 34)
-                                .background(AppTheme.buttonBackground)
-                                .clipShape(Circle())
-                        }
-                        .buttonStyle(.plain)
+                    Button(action: { onStartTimer(habit) }) {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(AppTheme.buttonForeground)
+                            .frame(width: 34, height: 34)
+                            .background(AppTheme.buttonBackground)
+                            .clipShape(Circle())
                     }
+                    .buttonStyle(.plain)
                 }
             }
             
             // MARK: - Daily Curriculum Preview (Adaptive Daily Concepts with Rollover)
+            // Hidden when the habit is completed today
             let todayConcepts = habit.todayScheduledConcepts
-            if !todayConcepts.isEmpty {
+            if !habit.isCompletedToday && !todayConcepts.isEmpty {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Image(systemName: "book.pages")
@@ -126,16 +112,18 @@ public struct HabitCardView: View {
                         
                         Spacer()
                         
-                        Button(action: { onOpenCurriculum(habit) }) {
-                            HStack(spacing: 3) {
-                                Text("Roadmap")
-                                    .font(.system(size: 10, weight: .bold, design: .rounded))
-                                Image(systemName: "chevron.right")
-                                    .font(.system(size: 9))
+                        if let onOpenCurriculum = onOpenCurriculum {
+                            Button(action: { onOpenCurriculum(habit) }) {
+                                HStack(spacing: 3) {
+                                    Text("Roadmap")
+                                        .font(.system(size: 10, weight: .bold, design: .rounded))
+                                    Image(systemName: "chevron.right")
+                                        .font(.system(size: 9))
+                                }
+                                .foregroundColor(AppTheme.textPrimary)
                             }
-                            .foregroundColor(AppTheme.textPrimary)
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
                     
                     ForEach(todayConcepts.prefix(2)) { concept in
@@ -171,36 +159,15 @@ public struct HabitCardView: View {
                 .background(AppTheme.surface.opacity(0.6))
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             }
-            
-            // MARK: - Bottom Actions Bar (Roadmap & Edit)
-            HStack {
-                Button(action: { onOpenCurriculum(habit) }) {
-                    HStack(spacing: 5) {
-                        Image(systemName: "list.bullet.rectangle")
-                            .font(.system(size: 11))
-                        Text("Syllabus (\(habit.completedCurriculum.count)/\(habit.curriculumQueue.count))")
-                            .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    }
-                    .foregroundColor(AppTheme.textSecondary)
-                }
-                .buttonStyle(.plain)
-                
-                Spacer()
-                
-                Button(action: { onEditHabit(habit) }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "slider.horizontal.3")
-                            .font(.system(size: 11))
-                        Text("Edit Habit")
-                            .font(.system(size: 11, weight: .semibold, design: .rounded))
-                    }
-                    .foregroundColor(AppTheme.textSecondary)
-                }
-                .buttonStyle(.plain)
-            }
-            .padding(.top, 2)
         }
         .padding(14)
-        .bentoCard()
+        .bentoCard(
+            backgroundColor: habit.isCompletedToday ? Color.green : AppTheme.cardBackground,
+            borderColor: habit.isCompletedToday ? Color.green : AppTheme.border
+        )
+        .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .onTapGesture {
+            onOpenCurriculum?(habit)
+        }
     }
 }

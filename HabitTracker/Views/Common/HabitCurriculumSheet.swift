@@ -221,7 +221,6 @@ public struct HabitCurriculumSheet: View {
                     .padding(.vertical, 8)
             } else {
                 ForEach(backlog) { concept in
-                    // If not in today's active schedule, render as upcoming
                     if !habit.todayScheduledConcepts.contains(where: { $0.id == concept.id }) {
                         conceptRowView(concept: concept, isTodayQueue: false)
                     }
@@ -365,7 +364,6 @@ public struct HabitCurriculumSheet: View {
             if concept.isCompleted {
                 concept.completedDate = Date()
                 
-                // Also automatically seed/handoff to Spaced Repetition (LessonItem)
                 let lessonItem = LessonItem(
                     title: concept.title,
                     notes: concept.conceptDescription,
