@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 
 public extension StreakWidgetSnapshotService {
     func saveSnapshot(from habits: [Habit]) {

@@ -1,5 +1,6 @@
 import Foundation
 import UserNotifications
+import SwiftData
 
 public enum NotificationDefaults {
     public static let morningReminderHour: Int = 5

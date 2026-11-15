@@ -51,6 +51,29 @@ public final class Habit {
         completedSessionsToday.reduce(0) { $0 + $1.durationMinutes }
     }
     
+    // MARK: - Streak Computations
+    public var completedSessionDates: [Date] {
+        sessions
+            .filter { $0.isCompleted }
+            .map { $0.date }
+    }
+
+    public var streakInfo: StreakInfo {
+        StreakEngine.streakInfo(from: completedSessionDates)
+    }
+
+    public var currentStreak: Int {
+        streakInfo.currentStreak
+    }
+
+    public var longestStreak: Int {
+        streakInfo.longestStreak
+    }
+
+    public var streakIsActiveToday: Bool {
+        streakInfo.isActiveToday
+    }
+    
     // MARK: - Curriculum Roadmap & Daily Rollover Queue
     public var uncompletedCurriculum: [CurriculumConcept] {
         curriculumQueue
