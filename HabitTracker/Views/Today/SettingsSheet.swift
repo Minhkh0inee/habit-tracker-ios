@@ -157,6 +157,12 @@ public struct SettingsSheet: View {
                 
                 Section(header: Text("About").foregroundColor(AppTheme.textSecondary)) {
                     HStack {
+                        Text("App Name")
+                        Spacer()
+                        Text("Momentum")
+                            .foregroundColor(AppTheme.textSecondary)
+                    }
+                    HStack {
                         Text("App Version")
                         Spacer()
                         Text("1.0.0 (Local Build)")

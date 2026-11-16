@@ -662,6 +662,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				CODE_SIGN_ENTITLEMENTS = HabitTracker/HabitTracker.entitlements;
 				INFOPLIST_FILE = HabitTracker/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Momentum;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -687,6 +688,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				CODE_SIGN_ENTITLEMENTS = HabitTracker/HabitTracker.entitlements;
 				INFOPLIST_FILE = HabitTracker/Resources/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Momentum;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

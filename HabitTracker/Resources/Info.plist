@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Habit Tracker</string>
+	<string>Momentum</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,9 +23,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>HabitTracker uses your camera to capture photo proof when completing study sessions.</string>
+	<string>Momentum uses your camera to capture photo proof when completing study sessions.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>HabitTracker accesses your photo library to select proof of habit completion.</string>
+	<string>Momentum accesses your photo library to select proof of habit completion.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

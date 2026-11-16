@@ -436,7 +436,7 @@ struct StreakWidget: Widget {
         StaticConfiguration(kind: kind, provider: StreakTimelineProvider()) { entry in
             StreakWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("Habit Streak")
+        .configurationDisplayName("Momentum Streak")
         .description("Keep your streak alive and track daily habits directly from your Home & Lock Screen.")
         .supportedFamilies([
             .systemSmall,

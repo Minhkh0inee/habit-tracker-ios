@@ -1,6 +1,6 @@
-# HabitTracker iOS
+# Momentum
 
-A minimalist, privacy-focused iOS Habit & Technical Learning Tracker built natively with **SwiftUI**, **SwiftData**, and **WidgetKit**, featuring an elegant monochrome Bento design system. Designed specifically for software engineers, computer science students, and technical learners tracking deep work and interview prep.
+A minimalist, high-contrast iOS Habit & Technical Learning Tracker built natively with **SwiftUI**, **SwiftData**, and **WidgetKit**, featuring an elegant monochrome Bento design system. Designed specifically for software engineers, computer science students, and self-directed learners pursuing deep work and interview mastery.
 
 ![iOS 17+](https://img.shields.io/badge/iOS-17.0%2B-black?style=flat-square&logo=apple)
 ![Swift 6](https://img.shields.io/badge/Swift-6.0-orange?style=flat-square&logo=swift)
@@ -8,48 +8,77 @@ A minimalist, privacy-focused iOS Habit & Technical Learning Tracker built nativ
 ![WidgetKit](https://img.shields.io/badge/WidgetKit-Home%20%26%20Lock%20Screen-purple?style=flat-square)
 ![Security](https://img.shields.io/badge/Security-iOS%20Keychain-red?style=flat-square)
 ![Testing](https://img.shields.io/badge/XCTest-850%2B%20LOC%20Unit%20Tests-brightgreen?style=flat-square)
-![Zero 3rd Party](https://img.shields.io/badge/Dependencies-Zero%20External-green?style=flat-square)
+![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero%20External-green?style=flat-square)
 
 ---
 
-## 🌟 Key Highlights & Engineering Features
+## 🌟 Key Highlights & Features
 
 ### 🔥 Duolingo-Style Streak Engine & Grace Period
-- **Stateless Mathematical Engine**: Computes current and all-time longest consecutive-day streaks from session dates with zero database coupling.
+- **Stateless Mathematical Engine**: Computes current and all-time longest consecutive-day streaks from session dates with zero database coupling (`StreakEngine`).
 - **Dynamic Heat Tiers**: Escalating visual feedback across 4 flame stages: *Building (1–6d)*, *Hot (7–13d)*, *Blazing (14–29d)*, and *Legendary (30+d)*.
-- **Urgency & Loss Aversion**: Detects `isAtRisk` state when yesterday was completed but today is pending, dynamically switching UI cues (ice/snowflake theme) and scheduling evening retention push alerts.
-- **Grace Day Architecture**: Designed 1-day pardon challenge mechanism to salvage broken streaks without breaking rhythm.
+- **Urgency & Loss Aversion**: Detects `isAtRisk` state when yesterday was completed but today is pending, dynamically switching UI cues (ice/snowflake theme) and scheduling smart evening retention push alerts.
+- **Grace Day Architecture**: Built-in 1-day pardon challenge mechanism to salvage broken streaks without breaking rhythm.
 
 ### 📱 WidgetKit Home & Lock Screen Extension
 - **Multi-Family Support**: Full support for `.systemSmall`, `.systemMedium`, and iOS Lock Screen accessories (`.accessoryCircular`, `.accessoryRectangular`, `.accessoryInline`).
-- **Decoupled Snapshot IPC**: Built a dedicated `StreakWidgetSnapshotService` communicating across targets via **App Groups** (`group.com.habittracker.app`) and a shared `UserDefaults` suite. Eliminates database file locking and keeps the widget memory footprint near zero.
+- **Decoupled Snapshot IPC**: Dedicated `StreakWidgetSnapshotService` communicating across targets via **App Groups** (`group.com.habittracker.app`) and a shared `UserDefaults` suite. Eliminates database file locking and keeps the widget memory footprint near zero.
 - **Deep Linking**: Direct URL routing (`habittracker://streak`) from Home Screen tap directly into relevant app flows.
+
+### 📚 Structured Roadmaps & Donne Martin's System Design Primer
+- **System Design Primer Roadmap**: Built-in 14-topic progressive curriculum covering Donne Martin's industry-standard primer:
+  1. Performance vs Scalability & Latency vs Throughput
+  2. Availability vs Consistency & The CAP Theorem
+  3. DNS & Content Delivery Networks (CDNs: Push vs Pull)
+  4. Load Balancers (L4 vs L7) & Reverse Proxies
+  5. Caching Architecture & Eviction Policies (LRU/LFU)
+  6. Relational Databases: Master-Slave, Federation & Sharding
+  7. NoSQL: Key-Value, Document, Wide-Column & Graph Databases
+  8. Asynchronous Processing: Message Queues & Pub-Sub
+  9. Communication Protocols: TCP/UDP, HTTP, WebSockets & RPC
+  10. The 4-Step System Design Interview Framework & Estimations
+  11. Case Study: Design a URL Shortener (TinyURL / Pastebin)
+  12. Case Study: Design Twitter Feed (Fanout-on-Write vs Read)
+  13. Case Study: Design a Distributed Web Crawler
+  14. Object-Oriented Design (OOD): SOLID Principles & Clean Patterns
+- **DSA Roadmap**: Core algorithmic structures (Arrays, Linked Lists, Trees, Graphs, Dynamic Programming).
+- **Runtime Auto-Migration**: Seamlessly migrates existing SwiftData containers to new curriculum roadmaps on app launch without data loss.
+
+### 🎯 Split Daily Goals vs Full Syllabus Architecture
+- **Today's Goals Sheet (`TodayGoalsSheet`)**: Accessible by tapping any habit card on the Today screen. Displays today's scheduled concepts with an animated daily goal progress bar (`X of Y Tasks Done`), expandable content cards revealing full concept notes, and a one-tap focus launcher.
+- **Full Syllabus & Roadmap Screen (`HabitCurriculumSheet`)**: Accessible from the Habit Mastery & Process view. Provides high-level visibility across the entire roadmap with milestone mastery percentages, Gemini AI syllabus generator, custom concept creation, and backlog queues.
 
 ### 🧠 Spaced Repetition System (SRS) — Leitner Engine
 - **Memory Retention Curve**: 5-stage Leitner spaced repetition interval scheduler ($1\text{d} \to 3\text{d} \to 7\text{d} \to 14\text{d} \to 30\text{d} \to 60\text{d}$).
-- **Interview Recall Flashcards**: Interactive revision mode with self-grading ("Hard / Reset" vs "Nailed It! / Advance") specifically targeted at engineering concepts and system design trade-offs.
+- **Interview Recall Flashcards**: Interactive revision mode with self-grading (*"Hard / Reset"* vs *"Nailed It! / Advance"*) specifically targeted at engineering concepts and system design trade-offs.
+
+### ⏱️ Focus Timer & Photo Proof
+- **Background-Resilient Timer**: Anchored with timestamp offsets rather than fragile ticks so timers survive backgrounding, app suspensions, and device locks.
+- **Photo Verification**: Completed sessions record visual proof via physical camera with fallback to local photo library stored safely in local sandboxed storage (`Documents/Proofs/`).
+- **Completed Card State**: Completed habit cards instantly turn solid green with high-contrast white typography, collapsing daily previews for a clean, rewarding dashboard.
 
 ### 🔐 Hardware-Backed Security (Keychain Integration)
 - **Zero Plain-Text Secrets**: Replaced standard `UserDefaults` storage with an in-house wrapper around Apple's `Security.framework` (`SecItemAdd`, `SecItemCopyMatching`, `SecItemDelete`) using `kSecClassGenericPassword` and `kSecAttrAccessibleAfterFirstUnlock`.
 - **Seamless Migration**: Backward-compatible automatic migration pipeline that detects, migrates, and purges legacy keys from disk.
 
-### 🤖 Gemini AI Syllabus & Interview Generator
-- **Personalized Roadmaps**: On-demand curriculum sequence generation and real-world FAANG interview scenarios via Gemini 2.5 Flash API.
-- **Zero Third-Party SDKs**: All AI communication uses native async/await `URLSession` with strict JSON schema decoding.
-
-### ⏱️ Focus Timer & Photo Proof
-- **Background-Resilient Timer**: Anchored with timestamp offsets rather than fragile ticks so timers survive backgrounding, app suspensions, and device locks.
-- **Photo Verification**: Completed sessions can record visual proof via physical camera with fallback to local photo library.
-
 ---
 
-## 🏗️ Architecture & Tech Stack
+## 🏗️ Architecture & Project Structure
 
 ```
-HabitTracker (iOS App)
+Momentum (HabitTracker)
  ├── Models/           # SwiftData Models (@Model) with cascade deletion rules
+ │    ├── Habit.swift
+ │    ├── HabitSession.swift
+ │    ├── CurriculumConcept.swift
+ │    ├── CurriculumSeedData.swift
+ │    └── LessonItem.swift
  ├── ViewModels/       # Observable MVVM state containers
  ├── Views/            # SwiftUI Views styled with Bento design system
+ │    ├── Today/       # TodayHabitsView, HabitCardView, TodayGoalsSheet, EditHabitSheet
+ │    ├── Progress/    # HabitProgressView, InterviewRecallView
+ │    ├── Timer/       # TimerView, SessionCompletionSheet, CircularProgressView
+ │    └── Common/      # HabitCurriculumSheet, UIComponents, SplashScreenView
  ├── Services/
  │    ├── StreakEngine.swift              # Pure stateless streak algorithms
  │    ├── SpacedRepetitionScheduler.swift # Leitner SRS interval calculator
@@ -62,7 +91,7 @@ HabitTracker (iOS App)
       └───► App Group Container (group.com.habittracker.app)
                   │
                   ▼
-HabitTrackerWidget (WidgetKit Extension)
+Momentum Widget (HabitTrackerWidget)
  ├── StreakWidget.swift                  # Small, Medium & Lock Screen timeline views
  └── StreakTimelineProvider.swift        # Proactive widget reload scheduling
 ```
@@ -114,7 +143,8 @@ The project includes **850+ lines of comprehensive unit tests** verifying core l
 
 3. Ensure both the **HabitTracker** and **HabitTrackerWidget** targets have their Signing Team set under **Signing & Capabilities**. Both share the App Group `group.com.habittracker.app`.
 
-4. Select the **HabitTracker** scheme and press **`Cmd + R`** to run.
+4. Select the **HabitTracker** scheme and press **`Cmd + R`** to run **Momentum** on simulator or device.
+
 5. To execute the full unit test suite, press **`Cmd + U`**.
 
 ---
