@@ -12,6 +12,16 @@ A minimalist, high-contrast iOS Habit & Technical Learning Tracker built nativel
 
 ---
 
+## 🎬 App Demo
+
+[![Watch Demo Video](https://img.shields.io/badge/Demo-Watch%20Video-E50914?style=for-the-badge&logo=google-drive&logoColor=white)](https://drive.google.com/file/d/1OSeYZnh4t7RuU1EGovaoMhHJvVoyUC2W/view?usp=drive_link)
+
+> 📹 **Walkthrough Video**: [Watch the Momentum App Demo on Google Drive](https://drive.google.com/file/d/1OSeYZnh4t7RuU1EGovaoMhHJvVoyUC2W/view?usp=drive_link)
+>
+> An end-to-end video walkthrough showcasing the monochrome Bento dashboard, Duolingo-style streak heat tiers, focus timer with photo proof verification, Donne Martin System Design Primer roadmap, Today's Goals sheet, Leitner SRS interview recall, and WidgetKit Home/Lock screen integration.
+
+---
+
 ## 🌟 Key Highlights & Features
 
 ### 🔥 Duolingo-Style Streak Engine & Grace Period
