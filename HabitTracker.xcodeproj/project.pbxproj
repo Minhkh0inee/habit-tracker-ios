@@ -99,7 +99,7 @@
 
 /* Begin PBXFileReference section */
 		E8A1002828DE5F9B9F200028 /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainServiceTests.swift"; sourceTree = "<group>"; };
-		E8A1005028DE5F9B9F200050 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/KeychainService.swift"; sourceTree = "<group>"; };
+		E8A1005028DE5F9B9F200050 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeychainService.swift"; sourceTree = "<group>"; };
 		E8A1000228DE5F9B9F200002 /* HabitTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HabitTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8A1002128DE5F9B9F200021 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MockURLProtocol.swift"; sourceTree = "<group>"; };
 		E8A1002228DE5F9B9F200022 /* StreakEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEngineTests.swift"; sourceTree = "<group>"; };
@@ -108,54 +108,54 @@
 		E8A1002528DE5F9B9F200025 /* ImageStorageServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageStorageServiceTests.swift"; sourceTree = "<group>"; };
 		E8A1002628DE5F9B9F200026 /* GeminiSyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeminiSyncServiceTests.swift"; sourceTree = "<group>"; };
 		E8A1002728DE5F9B9F200027 /* HabitModelPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitModelPersistenceTests.swift"; sourceTree = "<group>"; };
-		F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/Habit+Streak.swift"; sourceTree = "<group>"; };
-		F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakWidgetSnapshotService+App.swift"; sourceTree = "<group>"; };
-		F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakWidgetData.swift"; sourceTree = "<group>"; };
-		F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakWidgetSnapshotService.swift"; sourceTree = "<group>"; };
+		F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Habit+Streak.swift"; sourceTree = "<group>"; };
+		F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakWidgetSnapshotService+App.swift"; sourceTree = "<group>"; };
+		F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakWidgetData.swift"; sourceTree = "<group>"; };
+		F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakWidgetSnapshotService.swift"; sourceTree = "<group>"; };
 		F1A0000828DE5F9B9F200008 /* StreakWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakWidgetBundle.swift; sourceTree = "<group>"; };
 		F1A0001028DE5F9B9F200010 /* StreakWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakWidget.swift; sourceTree = "<group>"; };
 		F1A0001228DE5F9B9F200012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1A0001328DE5F9B9F200013 /* HabitTrackerWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitTrackerWidget.entitlements; sourceTree = "<group>"; };
 		F1A0001428DE5F9B9F200014 /* HabitTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HabitTracker.entitlements; sourceTree = "<group>"; };
 		F1A0001528DE5F9B9F200015 /* HabitTrackerWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = HabitTrackerWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BEC7E2774225DA4AE9C7F59 /* AIQuestionSyncSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/AIQuestionSyncSheet.swift"; sourceTree = "<group>"; };
-		85ED88C1EB1358B0BBCF0DBA /* AddHabitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/AddHabitSheet.swift"; sourceTree = "<group>"; };
-		90827F2270A25E02B2F47DEE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/CameraView.swift"; sourceTree = "<group>"; };
-		5D11F67BF29F521AA1F01E0B /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Timer/CircularProgressView.swift"; sourceTree = "<group>"; };
-		ECBB893BCFD4587D91C3C49A /* CurriculumConcept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/CurriculumConcept.swift"; sourceTree = "<group>"; };
-		20D3A1D667DC5B75B5C5BAE8 /* CurriculumSeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/CurriculumSeedData.swift"; sourceTree = "<group>"; };
-		A99656DF82185B24844BA4B9 /* EditHabitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/EditHabitSheet.swift"; sourceTree = "<group>"; };
-		2E8B1BB25038575EA32D7B0E /* EngineeringConceptBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/EngineeringConceptBank.swift"; sourceTree = "<group>"; };
-		61676E4CED9A53BF941C4817 /* GeminiSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/GeminiSyncService.swift"; sourceTree = "<group>"; };
-		B9DBD36D1F445BF5B36B5E1F /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/Habit.swift"; sourceTree = "<group>"; };
-		12FCA49D7AF55E3482DE69AE /* HabitCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/HabitCalendarView.swift"; sourceTree = "<group>"; };
-		D50E5AEC2D85596BAAD8632C /* HabitCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/HabitCardView.swift"; sourceTree = "<group>"; };
-		98622CA864E358AE909D8395 /* HabitCurriculumSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/HabitCurriculumSheet.swift"; sourceTree = "<group>"; };
-		2D439E103F905F1480270357 /* HabitProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Progress/HabitProgressView.swift"; sourceTree = "<group>"; };
-		97B6CA95BCBF5A638232CB38 /* HabitSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/HabitSession.swift"; sourceTree = "<group>"; };
+		0BEC7E2774225DA4AE9C7F59 /* AIQuestionSyncSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AIQuestionSyncSheet.swift"; sourceTree = "<group>"; };
+		85ED88C1EB1358B0BBCF0DBA /* AddHabitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddHabitSheet.swift"; sourceTree = "<group>"; };
+		90827F2270A25E02B2F47DEE /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CameraView.swift"; sourceTree = "<group>"; };
+		5D11F67BF29F521AA1F01E0B /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CircularProgressView.swift"; sourceTree = "<group>"; };
+		ECBB893BCFD4587D91C3C49A /* CurriculumConcept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurriculumConcept.swift"; sourceTree = "<group>"; };
+		20D3A1D667DC5B75B5C5BAE8 /* CurriculumSeedData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurriculumSeedData.swift"; sourceTree = "<group>"; };
+		A99656DF82185B24844BA4B9 /* EditHabitSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditHabitSheet.swift"; sourceTree = "<group>"; };
+		2E8B1BB25038575EA32D7B0E /* EngineeringConceptBank.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EngineeringConceptBank.swift"; sourceTree = "<group>"; };
+		61676E4CED9A53BF941C4817 /* GeminiSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GeminiSyncService.swift"; sourceTree = "<group>"; };
+		B9DBD36D1F445BF5B36B5E1F /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Habit.swift"; sourceTree = "<group>"; };
+		12FCA49D7AF55E3482DE69AE /* HabitCalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCalendarView.swift"; sourceTree = "<group>"; };
+		D50E5AEC2D85596BAAD8632C /* HabitCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCardView.swift"; sourceTree = "<group>"; };
+		98622CA864E358AE909D8395 /* HabitCurriculumSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitCurriculumSheet.swift"; sourceTree = "<group>"; };
+		2D439E103F905F1480270357 /* HabitProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitProgressView.swift"; sourceTree = "<group>"; };
+		97B6CA95BCBF5A638232CB38 /* HabitSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitSession.swift"; sourceTree = "<group>"; };
 		C75510E7F67D5DEDBDAF9A91 /* HabitTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HabitTrackerApp.swift"; sourceTree = "<group>"; };
-		15A3290F0799597B96C04E48 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/History/HistoryView.swift"; sourceTree = "<group>"; };
-		4F3062779F535C70873BD92F /* ImageStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/ImageStorageService.swift"; sourceTree = "<group>"; };
-		7321F3D3C9BC56DC9073D91A /* InterviewQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/InterviewQuestion.swift"; sourceTree = "<group>"; };
-		E112F1E51AF953B2807BD888 /* InterviewRecallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Progress/InterviewRecallView.swift"; sourceTree = "<group>"; };
-		E67C58F89692581784B90F63 /* LessonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/LessonItem.swift"; sourceTree = "<group>"; };
-		9C6D12F5FC885CA7BB2CCC9F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/MainTabView.swift"; sourceTree = "<group>"; };
-		03A6104E1B1E5EF38B680CC6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/NotificationManager.swift"; sourceTree = "<group>"; };
-		A3EC99BA6E015FC7A62EFDD8 /* SessionCompletionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Timer/SessionCompletionSheet.swift"; sourceTree = "<group>"; };
-		F9DE0267E83157FCB4E01FD2 /* SessionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/History/SessionDetailSheet.swift"; sourceTree = "<group>"; };
-		B954AAC5933A5944B0F9FC9D /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/SettingsSheet.swift"; sourceTree = "<group>"; };
-		901B641D883553B69152CF53 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/SplashScreenView.swift"; sourceTree = "<group>"; };
-		AC1BDD4AB9535C158FC10F4A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme/Theme.swift"; sourceTree = "<group>"; };
-		753DA1718A0E50B0BAC1E90C /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Timer/TimerView.swift"; sourceTree = "<group>"; };
-		53740826CD435EC782C0DCEF /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewModels/TimerViewModel.swift"; sourceTree = "<group>"; };
-		2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/TodayHabitsView.swift"; sourceTree = "<group>"; };
-		9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/SpacedRepetitionScheduler.swift"; sourceTree = "<group>"; };
-		390C89CA115D4D4BB50C7755 /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Common/UIComponents.swift"; sourceTree = "<group>"; };
-		A12B8109F6284AEBB95C4D72 /* TodayGoalsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/TodayGoalsSheet.swift"; sourceTree = "<group>"; };
-		887EA8CF02AC577DBC72B720 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Resources/Info.plist"; sourceTree = "<group>"; };
-		62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Resources/Assets.xcassets"; sourceTree = "<group>"; };
-		BB22CC33DD44EE55FF6600AA /* StreakEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/StreakEngine.swift"; sourceTree = "<group>"; };
-		DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Views/Today/StreakBannerView.swift"; sourceTree = "<group>"; };
+		15A3290F0799597B96C04E48 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HistoryView.swift"; sourceTree = "<group>"; };
+		4F3062779F535C70873BD92F /* ImageStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImageStorageService.swift"; sourceTree = "<group>"; };
+		7321F3D3C9BC56DC9073D91A /* InterviewQuestion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterviewQuestion.swift"; sourceTree = "<group>"; };
+		E112F1E51AF953B2807BD888 /* InterviewRecallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InterviewRecallView.swift"; sourceTree = "<group>"; };
+		E67C58F89692581784B90F63 /* LessonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LessonItem.swift"; sourceTree = "<group>"; };
+		9C6D12F5FC885CA7BB2CCC9F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainTabView.swift"; sourceTree = "<group>"; };
+		03A6104E1B1E5EF38B680CC6 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationManager.swift"; sourceTree = "<group>"; };
+		A3EC99BA6E015FC7A62EFDD8 /* SessionCompletionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionCompletionSheet.swift"; sourceTree = "<group>"; };
+		F9DE0267E83157FCB4E01FD2 /* SessionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SessionDetailSheet.swift"; sourceTree = "<group>"; };
+		B954AAC5933A5944B0F9FC9D /* SettingsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SettingsSheet.swift"; sourceTree = "<group>"; };
+		901B641D883553B69152CF53 /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SplashScreenView.swift"; sourceTree = "<group>"; };
+		AC1BDD4AB9535C158FC10F4A /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Theme.swift"; sourceTree = "<group>"; };
+		753DA1718A0E50B0BAC1E90C /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerView.swift"; sourceTree = "<group>"; };
+		53740826CD435EC782C0DCEF /* TimerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimerViewModel.swift"; sourceTree = "<group>"; };
+		2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodayHabitsView.swift"; sourceTree = "<group>"; };
+		9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SpacedRepetitionScheduler.swift"; sourceTree = "<group>"; };
+		390C89CA115D4D4BB50C7755 /* UIComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIComponents.swift"; sourceTree = "<group>"; };
+		A12B8109F6284AEBB95C4D72 /* TodayGoalsSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodayGoalsSheet.swift"; sourceTree = "<group>"; };
+		887EA8CF02AC577DBC72B720 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info.plist"; sourceTree = "<group>"; };
+		62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets.xcassets"; sourceTree = "<group>"; };
+		BB22CC33DD44EE55FF6600AA /* StreakEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakEngine.swift"; sourceTree = "<group>"; };
+		DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StreakBannerView.swift"; sourceTree = "<group>"; };
 		BFCD8D68FD9C5FE788962C45 /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -231,52 +231,140 @@
 		9A3C443CCB66541D85EC094D /* HabitTracker */ = {
 			isa = PBXGroup;
 			children = (
-				0BEC7E2774225DA4AE9C7F59 /* AIQuestionSyncSheet.swift */,
-				85ED88C1EB1358B0BBCF0DBA /* AddHabitSheet.swift */,
-				90827F2270A25E02B2F47DEE /* CameraView.swift */,
-				5D11F67BF29F521AA1F01E0B /* CircularProgressView.swift */,
-				ECBB893BCFD4587D91C3C49A /* CurriculumConcept.swift */,
-				20D3A1D667DC5B75B5C5BAE8 /* CurriculumSeedData.swift */,
-				A99656DF82185B24844BA4B9 /* EditHabitSheet.swift */,
-				2E8B1BB25038575EA32D7B0E /* EngineeringConceptBank.swift */,
-				61676E4CED9A53BF941C4817 /* GeminiSyncService.swift */,
-				E8A1005028DE5F9B9F200050 /* KeychainService.swift */,
-				B9DBD36D1F445BF5B36B5E1F /* Habit.swift */,
-				12FCA49D7AF55E3482DE69AE /* HabitCalendarView.swift */,
-				D50E5AEC2D85596BAAD8632C /* HabitCardView.swift */,
-				98622CA864E358AE909D8395 /* HabitCurriculumSheet.swift */,
-				2D439E103F905F1480270357 /* HabitProgressView.swift */,
-				97B6CA95BCBF5A638232CB38 /* HabitSession.swift */,
 				C75510E7F67D5DEDBDAF9A91 /* HabitTrackerApp.swift */,
-				15A3290F0799597B96C04E48 /* HistoryView.swift */,
-				4F3062779F535C70873BD92F /* ImageStorageService.swift */,
-				7321F3D3C9BC56DC9073D91A /* InterviewQuestion.swift */,
-				E112F1E51AF953B2807BD888 /* InterviewRecallView.swift */,
-				E67C58F89692581784B90F63 /* LessonItem.swift */,
-				9C6D12F5FC885CA7BB2CCC9F /* MainTabView.swift */,
-				03A6104E1B1E5EF38B680CC6 /* NotificationManager.swift */,
-				A3EC99BA6E015FC7A62EFDD8 /* SessionCompletionSheet.swift */,
-				F9DE0267E83157FCB4E01FD2 /* SessionDetailSheet.swift */,
-				B954AAC5933A5944B0F9FC9D /* SettingsSheet.swift */,
-				901B641D883553B69152CF53 /* SplashScreenView.swift */,
-				AC1BDD4AB9535C158FC10F4A /* Theme.swift */,
-				753DA1718A0E50B0BAC1E90C /* TimerView.swift */,
-				53740826CD435EC782C0DCEF /* TimerViewModel.swift */,
-				2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */,
-				9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */,
-				390C89CA115D4D4BB50C7755 /* UIComponents.swift */,
-				A12B8109F6284AEBB95C4D72 /* TodayGoalsSheet.swift */,
-				BB22CC33DD44EE55FF6600AA /* StreakEngine.swift */,
-				DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */,
-				887EA8CF02AC577DBC72B720 /* Info.plist */,
-				62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */,
-				F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */,
-				F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */,
+				E900000128DE5F9B9F200001 /* Models */,
+				E900000228DE5F9B9F200002 /* ViewModels */,
+				E900000328DE5F9B9F200003 /* Views */,
+				E900000928DE5F9B9F200009 /* Services */,
+				E900000A28DE5F9B9F20000A /* Theme */,
+				E900000B28DE5F9B9F20000B /* Resources */,
 				F1A0001428DE5F9B9F200014 /* HabitTracker.entitlements */,
-				F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */,
-				F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */,
 			);
 			path = HabitTracker;
+			sourceTree = "<group>";
+		};
+		E900000128DE5F9B9F200001 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				ECBB893BCFD4587D91C3C49A /* CurriculumConcept.swift */,
+				20D3A1D667DC5B75B5C5BAE8 /* CurriculumSeedData.swift */,
+				2E8B1BB25038575EA32D7B0E /* EngineeringConceptBank.swift */,
+				F1A0003028DE5F9B9F200030 /* Habit+Streak.swift */,
+				B9DBD36D1F445BF5B36B5E1F /* Habit.swift */,
+				97B6CA95BCBF5A638232CB38 /* HabitSession.swift */,
+				7321F3D3C9BC56DC9073D91A /* InterviewQuestion.swift */,
+				E67C58F89692581784B90F63 /* LessonItem.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E900000228DE5F9B9F200002 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				53740826CD435EC782C0DCEF /* TimerViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E900000328DE5F9B9F200003 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E900000428DE5F9B9F200004 /* Today */,
+				E900000528DE5F9B9F200005 /* Timer */,
+				E900000628DE5F9B9F200006 /* Progress */,
+				E900000728DE5F9B9F200007 /* History */,
+				E900000828DE5F9B9F200008 /* Common */,
+				9C6D12F5FC885CA7BB2CCC9F /* MainTabView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E900000428DE5F9B9F200004 /* Today */ = {
+			isa = PBXGroup;
+			children = (
+				2D8C5797A5745AA98F228542 /* TodayHabitsView.swift */,
+				D50E5AEC2D85596BAAD8632C /* HabitCardView.swift */,
+				A12B8109F6284AEBB95C4D72 /* TodayGoalsSheet.swift */,
+				DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */,
+				85ED88C1EB1358B0BBCF0DBA /* AddHabitSheet.swift */,
+				A99656DF82185B24844BA4B9 /* EditHabitSheet.swift */,
+				B954AAC5933A5944B0F9FC9D /* SettingsSheet.swift */,
+			);
+			path = Today;
+			sourceTree = "<group>";
+		};
+		E900000528DE5F9B9F200005 /* Timer */ = {
+			isa = PBXGroup;
+			children = (
+				753DA1718A0E50B0BAC1E90C /* TimerView.swift */,
+				5D11F67BF29F521AA1F01E0B /* CircularProgressView.swift */,
+				A3EC99BA6E015FC7A62EFDD8 /* SessionCompletionSheet.swift */,
+			);
+			path = Timer;
+			sourceTree = "<group>";
+		};
+		E900000628DE5F9B9F200006 /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				2D439E103F905F1480270357 /* HabitProgressView.swift */,
+				E112F1E51AF953B2807BD888 /* InterviewRecallView.swift */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
+		E900000728DE5F9B9F200007 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				15A3290F0799597B96C04E48 /* HistoryView.swift */,
+				F9DE0267E83157FCB4E01FD2 /* SessionDetailSheet.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
+		E900000828DE5F9B9F200008 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0BEC7E2774225DA4AE9C7F59 /* AIQuestionSyncSheet.swift */,
+				90827F2270A25E02B2F47DEE /* CameraView.swift */,
+				12FCA49D7AF55E3482DE69AE /* HabitCalendarView.swift */,
+				98622CA864E358AE909D8395 /* HabitCurriculumSheet.swift */,
+				901B641D883553B69152CF53 /* SplashScreenView.swift */,
+				390C89CA115D4D4BB50C7755 /* UIComponents.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		E900000928DE5F9B9F200009 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				61676E4CED9A53BF941C4817 /* GeminiSyncService.swift */,
+				4F3062779F535C70873BD92F /* ImageStorageService.swift */,
+				E8A1005028DE5F9B9F200050 /* KeychainService.swift */,
+				03A6104E1B1E5EF38B680CC6 /* NotificationManager.swift */,
+				9FC65E2725E24FC489CC0B3E /* SpacedRepetitionScheduler.swift */,
+				BB22CC33DD44EE55FF6600AA /* StreakEngine.swift */,
+				F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */,
+				F1A0000428DE5F9B9F200004 /* StreakWidgetSnapshotService.swift */,
+				F1A0003228DE5F9B9F200032 /* StreakWidgetSnapshotService+App.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E900000A28DE5F9B9F20000A /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				AC1BDD4AB9535C158FC10F4A /* Theme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		E900000B28DE5F9B9F20000B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				62C2571CC4ED5609BBAD4D73 /* Assets.xcassets */,
+				887EA8CF02AC577DBC72B720 /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A4001AD72279510C834E13F3 /* Products */ = {
