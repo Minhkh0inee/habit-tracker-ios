@@ -3,6 +3,7 @@ import SwiftData
 
 @main
 struct HabitTrackerApp: App {
+    @State private var authService = SupabaseAuthService.shared
     let container: ModelContainer
     
     init() {
@@ -41,14 +42,21 @@ struct HabitTrackerApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                MainTabView()
-                
+                if authService.isAuthenticated {
+                    MainTabView()
+                        .transition(.opacity)
+                } else if !authService.isLoading {
+                    SignUpView()
+                        .transition(.opacity)
+                }
+
                 if showSplash {
                     SplashScreenView()
                         .transition(.opacity)
                         .zIndex(1)
                 }
             }
+            .animation(.easeInOut(duration: 0.35), value: authService.isAuthenticated)
             .onAppear {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                     withAnimation(.easeOut(duration: 0.35)) {

@@ -39,6 +39,7 @@
 		D1D975F6EC3758C088E8F21E /* ImageStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F3062779F535C70873BD92F /* ImageStorageService.swift */; };
 		D6B9E561A6425CCE8E72454B /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90827F2270A25E02B2F47DEE /* CameraView.swift */; };
 		D79711B730AF40C200A2F50E /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = D79711B630AF40C200A2F50E /* Supabase */; };
+		D79711D230B1641400A2F50E /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79711D130B1640800A2F50E /* SignUpView.swift */; };
 		DF1F3777EF7B59CDAC4F921C /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A6104E1B1E5EF38B680CC6 /* NotificationManager.swift */; };
 		E1AD005AB8B854128E4DF618 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D12F5FC885CA7BB2CCC9F /* MainTabView.swift */; };
 		E8A1003128DE5F9B9F200031 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1002128DE5F9B9F200021 /* MockURLProtocol.swift */; };
@@ -49,6 +50,8 @@
 		E8A1003628DE5F9B9F200036 /* GeminiSyncServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1002628DE5F9B9F200026 /* GeminiSyncServiceTests.swift */; };
 		E8A1003728DE5F9B9F200037 /* HabitModelPersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1002728DE5F9B9F200027 /* HabitModelPersistenceTests.swift */; };
 		E8A1003828DE5F9B9F200038 /* KeychainServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1002828DE5F9B9F200028 /* KeychainServiceTests.swift */; };
+		E8A1003928DE5F9B9F200039 /* AuthValidatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1002928DE5F9B9F200029 /* AuthValidatorTests.swift */; };
+		E8A1003A28DE5F9B9F20003A /* SupabaseAuthServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1002A28DE5F9B9F20002A /* SupabaseAuthServiceTests.swift */; };
 		E8A1005128DE5F9B9F200051 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8A1005028DE5F9B9F200050 /* KeychainService.swift */; };
 		EBF86A828F51583E88B99BBC /* HabitSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B6CA95BCBF5A638232CB38 /* HabitSession.swift */; };
 		EEDFB976A9D0591D86930FA0 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D11F67BF29F521AA1F01E0B /* CircularProgressView.swift */; };
@@ -132,6 +135,7 @@
 		BFCD8D68FD9C5FE788962C45 /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75510E7F67D5DEDBDAF9A91 /* HabitTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerApp.swift; sourceTree = "<group>"; };
 		D50E5AEC2D85596BAAD8632C /* HabitCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCardView.swift; sourceTree = "<group>"; };
+		D79711D130B1640800A2F50E /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		DD44EE55FF6600AABB11CC22 /* StreakBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakBannerView.swift; sourceTree = "<group>"; };
 		E112F1E51AF953B2807BD888 /* InterviewRecallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterviewRecallView.swift; sourceTree = "<group>"; };
 		E67C58F89692581784B90F63 /* LessonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonItem.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 		E8A1002628DE5F9B9F200026 /* GeminiSyncServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiSyncServiceTests.swift; sourceTree = "<group>"; };
 		E8A1002728DE5F9B9F200027 /* HabitModelPersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitModelPersistenceTests.swift; sourceTree = "<group>"; };
 		E8A1002828DE5F9B9F200028 /* KeychainServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainServiceTests.swift; sourceTree = "<group>"; };
+		E8A1002928DE5F9B9F200029 /* AuthValidatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthValidatorTests.swift; sourceTree = "<group>"; };
+		E8A1002A28DE5F9B9F20002A /* SupabaseAuthServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseAuthServiceTests.swift; sourceTree = "<group>"; };
 		E8A1005028DE5F9B9F200050 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		ECBB893BCFD4587D91C3C49A /* CurriculumConcept.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurriculumConcept.swift; sourceTree = "<group>"; };
 		F1A0000128DE5F9B9F200001 /* StreakWidgetData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreakWidgetData.swift; sourceTree = "<group>"; };
@@ -234,6 +240,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D79711CE30B1639E00A2F50E /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				D79711D130B1640800A2F50E /* SignUpView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		E8A1001128DE5F9B9F200011 /* HabitTrackerTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +259,8 @@
 				E8A1002628DE5F9B9F200026 /* GeminiSyncServiceTests.swift */,
 				E8A1002728DE5F9B9F200027 /* HabitModelPersistenceTests.swift */,
 				E8A1002828DE5F9B9F200028 /* KeychainServiceTests.swift */,
+				E8A1002928DE5F9B9F200029 /* AuthValidatorTests.swift */,
+				E8A1002A28DE5F9B9F20002A /* SupabaseAuthServiceTests.swift */,
 			);
 			path = HabitTrackerTests;
 			sourceTree = "<group>";
@@ -289,6 +305,7 @@
 				E900000728DE5F9B9F200007 /* History */,
 				E900000828DE5F9B9F200008 /* Common */,
 				9C6D12F5FC885CA7BB2CCC9F /* MainTabView.swift */,
+				D79711CE30B1639E00A2F50E /* Auth */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -403,6 +420,7 @@
 				AFA80E6BB8525F92B71B380B /* Sources */,
 				E4F1E235C0175CBBB720F037 /* Frameworks */,
 				D75E1797E1F253AE80BA6BDD /* Resources */,
+				D79711E030B1700000A2F50E /* Copy Secrets if Present */,
 				F1A0002428DE5F9B9F200024 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -527,6 +545,28 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		D79711E030B1700000A2F50E /* Copy Secrets if Present */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Secrets if Present";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SECRETS_FILE=\"${SRCROOT}/HabitTracker/Resources/Secrets.plist\"\nif [ -f \"${SECRETS_FILE}\" ]; then\n    cp \"${SECRETS_FILE}\" \"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		AFA80E6BB8525F92B71B380B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -541,6 +581,7 @@
 				D6B9E561A6425CCE8E72454B /* CameraView.swift in Sources */,
 				EEDFB976A9D0591D86930FA0 /* CircularProgressView.swift in Sources */,
 				72750171FEF855A5891522DF /* CurriculumConcept.swift in Sources */,
+				D79711D230B1641400A2F50E /* SignUpView.swift in Sources */,
 				376E1923F4FF5572BD83E1B8 /* CurriculumSeedData.swift in Sources */,
 				317B27ECEF295B4A98196CC4 /* EditHabitSheet.swift in Sources */,
 				35EFAAAF3ABF570F86A81233 /* EngineeringConceptBank.swift in Sources */,
@@ -588,6 +629,8 @@
 				E8A1003628DE5F9B9F200036 /* GeminiSyncServiceTests.swift in Sources */,
 				E8A1003728DE5F9B9F200037 /* HabitModelPersistenceTests.swift in Sources */,
 				E8A1003828DE5F9B9F200038 /* KeychainServiceTests.swift in Sources */,
+				E8A1003928DE5F9B9F200039 /* AuthValidatorTests.swift in Sources */,
+				E8A1003A28DE5F9B9F20003A /* SupabaseAuthServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

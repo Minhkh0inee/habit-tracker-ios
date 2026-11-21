@@ -22,15 +22,16 @@ final class SupabaseAuthService {
 
     var currentNonce: String? = nil
 
-    private let client = SupabaseClientManager.shared.client
+    private let client: SupabaseClient
     private var authListenerTask: Task<Void, Never>?
 
-    private init() {
-        startAuthListener()
-    }
-
-    deinit {
-        authListenerTask?.cancel()
+    init(client: SupabaseClient = SupabaseClientManager.shared.client, startListener: Bool = true) {
+        self.client = client
+        if startListener {
+            startAuthListener()
+        } else {
+            self.isLoading = false
+        }
     }
 
     func startAuthListener() {
@@ -82,6 +83,7 @@ final class SupabaseAuthService {
             self.currentUser = response.user
             self.isAuthenticated = (response.session != nil)
         } catch {
+            print("❌ [SupabaseAuth] signUp error: \(error)")
             self.errorMessage = error.localizedDescription
             throw error
         }
@@ -100,6 +102,7 @@ final class SupabaseAuthService {
             self.currentUser = session.user
             self.isAuthenticated = true
         } catch {
+            print("❌ [SupabaseAuth] signIn error: \(error)")
             self.errorMessage = error.localizedDescription
             throw error
         }
@@ -119,7 +122,11 @@ final class SupabaseAuthService {
     }
 
     func handleAppleAuthorization(_ authorization: ASAuthorization) async throws {
-        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+        try await handleAppleCredential(credential: authorization.credential)
+    }
+
+    func handleAppleCredential(credential: ASAuthorizationCredential) async throws {
+        guard let appleIDCredential = credential as? ASAuthorizationAppleIDCredential,
               let idTokenData = appleIDCredential.identityToken,
               let idTokenString = String(data: idTokenData, encoding: .utf8),
               let rawNonce = self.currentNonce else {
@@ -149,6 +156,7 @@ final class SupabaseAuthService {
             self.currentUser = session.user
             self.isAuthenticated = true
         } catch {
+            print("❌ [SupabaseAuth] signIn error: \(error)")
             self.errorMessage = error.localizedDescription
             throw error
         }

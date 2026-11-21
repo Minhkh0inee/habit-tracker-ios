@@ -39,7 +39,7 @@ enum SupabaseConfig {
         }
 
         #if DEBUG
-        print("⚠️ [SupabaseConfig] SUPABASE_URL not configured. Create Secrets.plist (see Config.plist.example).")
+        print("⚠️ [SupabaseConfig] SUPABASE_URL not found. Ensure Secrets.plist exists or set SUPABASE_URL in Info.plist / environment.")
         #endif
         return URL(string: "https://placeholder.supabase.co")!
     }
@@ -64,7 +64,7 @@ enum SupabaseConfig {
         }
 
         #if DEBUG
-        print("⚠️ [SupabaseConfig] SUPABASE_ANON_KEY not configured. Create Secrets.plist (see Config.plist.example).")
+        print("⚠️ [SupabaseConfig] SUPABASE_ANON_KEY not found. Ensure Secrets.plist exists or set SUPABASE_ANON_KEY in Info.plist / environment.")
         #endif
         return ""
     }
