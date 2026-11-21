@@ -1,0 +1,42 @@
+{
+  "originHash" : "ccc727310637079b7355ccf59e7d153c26677020c1a43e177b78cc9df7963c0f",
+  "pins" : [
+    {
+      "identity" : "supabase-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/supabase/supabase-swift.git",
+      "state" : {
+        "revision" : "12694543f0c5f407504b54276f0dc1536065e016",
+        "version" : "2.14.3"
+      }
+    },
+    {
+      "identity" : "swift-asn1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-asn1.git",
+      "state" : {
+        "revision" : "917b472dbe53ba699cbb0495f9a95a084bc6364d",
+        "version" : "1.7.4"
+      }
+    },
+    {
+      "identity" : "swift-concurrency-extras",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pointfreeco/swift-concurrency-extras",
+      "state" : {
+        "revision" : "8a4260f7373493435bd21194585c95b72bfdd401",
+        "version" : "1.4.3"
+      }
+    },
+    {
+      "identity" : "swift-crypto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-crypto.git",
+      "state" : {
+        "revision" : "95ba0316a9b733e92bb6b071255ff46263bbe7dc",
+        "version" : "3.15.1"
+      }
+    }
+  ],
+  "version" : 3
+}
